@@ -7,6 +7,16 @@
     <p class="lead">Just another to-do app.</p>
   </div>
 
+  <form action="add_item" method="post" class="form-example">
+    <div class="form-example">
+      <label for="name"> Add item: </label>
+      <input type="text" name="todo_title" id="todo_title" required>
+    </div>
+    <div class="form-example">
+      <input type="submit" value="Submit">
+    </div>
+  </form>
+
   <div class="row">
     <div class="col-md-12">
       <h2>Items</h2>
