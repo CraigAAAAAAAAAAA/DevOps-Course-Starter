@@ -26,8 +26,13 @@ def index():
 
     response_json = response.json()
 
+    items = []
 
-    items = response_json[0]['cards']
+    for trello_list in response_json:
+        for card in trello_list['cards']:
+            card['status'] = trello_list['name']
+            items.append(card)
+
     return render_template('index.html', items = items)
 
 @app.route('/add_item', methods=['POST'])
