@@ -23,7 +23,7 @@ url = "https://api.trello.com/1/cards"
 querystring = {
     "key":os.getenv("TRELLO_API_KEY"),
     "token":os.getenv("TRELLO_API_TOKEN"),
-    "idList" : 620540bb9814898a4ec14f53,
+    "idList" : "620540bb9814898a4ec14f53",
     "name" : name
 
  }
