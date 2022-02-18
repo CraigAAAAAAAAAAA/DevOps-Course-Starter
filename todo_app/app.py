@@ -35,10 +35,19 @@ def index():
 
     return render_template('index.html', items = items)
 
-@app.route('/add_item', methods=['POST'])
-def add_new_item():
-    title = request.form['todo_title']
-    add_item(title)
+@app.route('/add_card', methods=['POST'])
+def add_new_card(list_id, card_name):
+
+    url = "https://api.trello.com/1/cards"
+
+    response = requests.request("POST", url, params=querystring)
+
+    card_id = response.json()
+
+    title = request.form['name']
+
+    ["id"]
+    
     return index()
     
 
