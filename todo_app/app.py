@@ -40,26 +40,42 @@ def add_new_card():
 
     url = "https://api.trello.com/1/cards"
 
-    title = request.form['name']
+    title = request.form['todo_title']
 
     querystring = {
     "key":os.getenv("TRELLO_API_KEY"),
     "token":os.getenv("TRELLO_API_TOKEN"),
     "idList" : "620540bb9814898a4ec14f53",
-    "name" : name
+    "name" : title
 
  }
 
     response = requests.request("POST", url, params=querystring)
 
     card_id = response.json()
+    
+    return index ()
+    
+@app.route('/mark_done', methods=['POST'])
+def mark_done():
 
+    card_id = request.form['card_id']
    
+    url = f"https://api.trello.com/1/cards/{card_id}"
 
-    ["id"]
+    querystring = {
+    "key":os.getenv("TRELLO_API_KEY"),
+    "token":os.getenv("TRELLO_API_TOKEN"),
+    "idList" : "620540d8d9ab6c510fac951c",
+
+ }
+
+    response = requests.request("PUT", url, params=querystring)
+
+    card_id = response.json()
+
     
-    return index()
-    
+    return index ()
 
 
 
