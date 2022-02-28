@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from todo_app.data.session_items import get_items, add_item
-from todo_app.item import Item
+from todo_app.todo import Item
 
 from todo_app.flask_config import Config
 import requests
@@ -21,7 +20,7 @@ def index():
             "key":os.getenv("TRELLO_API_KEY"),
             "token":os.getenv("TRELLO_API_TOKEN"),
             "cards": "open"
-}
+    }
 
     response = requests.request("GET", url, params=querystring)
 
@@ -31,8 +30,8 @@ def index():
 
     for trello_list in response_json:
         for card in trello_list['cards']:
-            card['status'] = trello_list['name']
-            items.append(card)
+            myItem = Item(card['id'] , card['name'] , trello_list['name'])
+            items.append(myItem)
 
     return render_template('index.html', items = items)
 
