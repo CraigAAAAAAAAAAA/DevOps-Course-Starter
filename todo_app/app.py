@@ -12,9 +12,7 @@ app.config.from_object(Config())
 @app.route('/')
 def index():
      
-    url = "https://api.trello.com/1/boards/vwBBuYdA/lists"
-
-    print(os.getenv("TRELLO_API_KEY"))
+    url = f"https://api.trello.com/1/boards/{os.getenv('TRELLO_BOARD_ID')}/lists"
 
     querystring = {
             "key":os.getenv("TRELLO_API_KEY"),
@@ -45,7 +43,7 @@ def add_new_card():
     querystring = {
     "key":os.getenv("TRELLO_API_KEY"),
     "token":os.getenv("TRELLO_API_TOKEN"),
-    "idList" : "620540bb9814898a4ec14f53",
+    "idList" : os.getenv("TRELLO_LIST_TODO"),
     "name" : title
 
  }
@@ -66,7 +64,7 @@ def mark_done():
     querystring = {
     "key":os.getenv("TRELLO_API_KEY"),
     "token":os.getenv("TRELLO_API_TOKEN"),
-    "idList" : "620540d8d9ab6c510fac951c",
+    "idList" : os.getenv("TRELLO_LIST_DONE"),
 
  }
 
