@@ -19,5 +19,9 @@ class ViewModel:
         return []
 
     @property
-    def done_items(self):
-        return []
+    def mark_done(self):
+        items_done = []
+        for mark_done in self.items:
+            if mark_done.status == "Done":
+                items_done.append(mark_done)        
+        return items_done
