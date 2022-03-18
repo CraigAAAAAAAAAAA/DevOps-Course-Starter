@@ -8,8 +8,9 @@ class ViewModel:
 
     @property
     def todo_items(self):
-        
-        return []
+        for TRELLO_LIST_TODO in self._items:
+            if TRELLO_LIST_TODO
+                return []
 
     @property
     def in_progress_items(self):
