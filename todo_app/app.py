@@ -4,6 +4,7 @@ from todo_app.todo import Item
 from todo_app.flask_config import Config
 import requests
 import os
+from todo_app.view_model import ViewModel
 
 app = Flask(__name__)
 app.config.from_object(Config())
@@ -31,7 +32,9 @@ def index():
             myItem = Item(card['id'] , card['name'] , trello_list['name'])
             items.append(myItem)
 
-    return render_template('index.html', items = items)
+    item_view_model = ViewModel(items)
+    return render_template('index.html',
+    view_model=item_view_model)
 
 @app.route('/add_card', methods=['POST'])
 def add_new_card():
