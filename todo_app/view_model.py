@@ -8,10 +8,11 @@ class ViewModel:
 
     @property
     def todo_items(self):
+        items_to_do = []
         for myItem in self.items:
-            if item.list == "To Do":
-                todo_items.append(myItem)        
-        return items
+            if myItem.status == "To Do":
+                items_to_do.append(myItem)        
+        return items_to_do
 
     @property
     def in_progress_items(self):
