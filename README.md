@@ -59,3 +59,11 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+## Testing
+
+This project contains 2 units tests, the first test checks that a new task called 'answer emails' appears in the correct "to do" list not any of the other lists. The second unit test tests that the task "go home" has gone into the "done items" list. 
+
+There is also an integration test which use mocked data from .env.test to ensure there is a response from Trello and that a new card is added to a list. 
+
+To execute the tests run: poetry run pytest on the command line.
