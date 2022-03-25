@@ -23,10 +23,18 @@
       <ul class="list-group mb-4">
         {% for item in view_model.items %} 
                 <li>{{ item.name }} - {{item.status}}
+                  {% if item.status != "In progress"%}
+                  <form action="in_progress" method="post" class="form-example">
+                    <input type="hidden" value="{{item.id}}" name="card_id">
+                    <input type="submit" value="Doing">
+                  </form>
+                  {% endif %}
+                  {% if item.status != "Done"%}
                   <form action="mark_done" method="post" class="form-example">
                     <input type="hidden" value="{{item.id}}" name="card_id">
                     <input type="submit" value="Done">
                   </form>
+                  {% endif %}
                 </li> 
         {% endfor %}
       </ul>

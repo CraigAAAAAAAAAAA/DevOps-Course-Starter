@@ -79,6 +79,27 @@ def create_app():
         
         return index ()
 
+    @app.route('/in_progress', methods=['POST'])
+    def in_progress():
+
+        card_id = request.form['card_id']
+    
+        url = f"https://api.trello.com/1/cards/{card_id}"
+
+        querystring = {
+        "key":os.getenv("TRELLO_API_KEY"),
+        "token":os.getenv("TRELLO_API_TOKEN"),
+        "idList" : os.getenv("TRELLO_LIST_IN_PROGRESS"),
+
+        }
+
+        response = requests.request("PUT", url, params=querystring)
+
+        card_id = response.json()
+
+        
+        return index ()
+
     return app
 
     
