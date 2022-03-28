@@ -15,8 +15,12 @@ class ViewModel:
         return items_to_do
 
     @property
-    def in_progress_items(self):
-        return []
+    def in_progress(self):
+        items_in_progress = []
+        for mark_in_progress in self.items:
+            if mark_in_progress.status == "In progress":
+                items_in_progress.append(mark_in_progress)        
+        return items_in_progress
 
     @property
     def done_items(self):
