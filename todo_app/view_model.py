@@ -18,7 +18,7 @@ class ViewModel:
     def in_progress(self):
         items_in_progress = []
         for mark_in_progress in self.items:
-            if mark_in_progress.status == "In progress":
+            if mark_in_progress.status == "In Progress":
                 items_in_progress.append(mark_in_progress)        
         return items_in_progress
 
