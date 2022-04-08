@@ -20,9 +20,15 @@
       args:
         creates: /home/ec2-user/.local/bin/poetry
 
-    - name: Run command if /opt/todoapp does not exist
+    - name: Run command if /opt/todoapp does not exist 
       ansible.builtin.file:
         path: /opt/todoapp
         state: directory
-        mode: 777
+        mode: '0777'
       become: yes
+
+    - name: Git checkout
+      ansible.builtin.git:
+        repo: https://github.com/CraigAAAAAAAAAAA/DevOps-Course-Starter.git
+        dest: /opt/todoapp
+        version: exercise-4 
