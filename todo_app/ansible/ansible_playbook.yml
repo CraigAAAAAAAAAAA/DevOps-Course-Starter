@@ -32,3 +32,8 @@
         repo: https://github.com/CraigAAAAAAAAAAA/DevOps-Course-Starter.git
         dest: /opt/todoapp
         version: exercise-4 
+
+    - name: Poetry install on managed node
+      ansible.builtin.shell: /home/ec2-user/.local/bin/poetry install
+      args:
+        chdir: /opt/todoapp
