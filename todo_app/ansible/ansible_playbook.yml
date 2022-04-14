@@ -1,9 +1,21 @@
 - name: my playbook
   hosts: webservers
   remote_user: ec2-user
-  vars_prompt:
-    - name: TRELLO_API_TOKEN
-      prompt: Enter the TRELLO_API_TOKEN
+  # vars_prompt:
+   # - name: TRELLO_API_TOKEN
+      # prompt: Enter the TRELLO_API_TOKEN
+  
+  vars:
+    trello_key: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          30643239333362383861396637356534356636616663353766643264653062316163646361616364
+          3834306335613761613762616363623436383430396436370a623638633861336363353439613339
+          61303265663362386564323362306431363162633537316338333037643665663233366166303937
+          3564393764363236640a356537353766316231656236613561613965633037363437386365313333
+          63616335316266653738633065666131626438303732306366363564383836316266356535376330
+          61346333326464353338643530636132656439666664313535336263383338316138646562663464
+          31633064383231323934323263373031643563656539656436303261336364636365633266353363
+          63353533653232303538
 
   tasks:
     - name: Install python3
@@ -45,3 +57,9 @@
       ansible.builtin.template:
         src: /home/ec2-user/.env.j2
         dest: /opt/todoapp/.env
+
+    - name: Copy todoapp.service
+      ansible.builtin.copy:
+        src: /home/ec2-user/todoapp.service
+        dest: /etc/systemd/system/todoapp.service
+      become: yes
