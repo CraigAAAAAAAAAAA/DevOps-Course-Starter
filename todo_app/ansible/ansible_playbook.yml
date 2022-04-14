@@ -1,6 +1,9 @@
 - name: my playbook
   hosts: webservers
   remote_user: ec2-user
+  vars_prompt:
+    - name: TRELLO_API_TOKEN
+      prompt: Enter the TRELLO_API_TOKEN
 
   tasks:
     - name: Install python3
@@ -37,3 +40,8 @@
       ansible.builtin.shell: /home/ec2-user/.local/bin/poetry install
       args:
         chdir: /opt/todoapp
+    
+    - name: Template .env.j2 file to /opt/todoapp
+      ansible.builtin.template:
+        src: /home/ec2-user/.env.j2
+        dest: /opt/todoapp/.env
