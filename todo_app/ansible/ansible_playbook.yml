@@ -63,3 +63,10 @@
         src: /home/ec2-user/todoapp.service
         dest: /etc/systemd/system/todoapp.service
       become: yes
+
+    - name: Run todoapp and issue daemon-reload to pick up config changes
+      ansible.builtin.systemd:
+        name: todoapp
+        daemon_reload: true
+        state: restarted
+      become: yes
