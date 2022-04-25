@@ -82,3 +82,5 @@ $ ansible-playbook exercise-4-playbook.yml -i my-ansible-inventory --vault-passw
 
 use the folowing address to check the to-do app is working:
 http://3.9.109.19:5000/
+
+For more information on using ansible modules - see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html
