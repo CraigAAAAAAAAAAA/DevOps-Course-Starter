@@ -67,3 +67,18 @@ This project contains 2 units tests, the first test checks that a new task calle
 There is also an integration test which use mocked data from .env.test to ensure there is a response from Trello and that a new card is added to a list. 
 
 To execute the tests run: poetry run pytest on the command line.
+
+## SSH and running from VM/Ansible
+
+Ansible controller IP: 13.40.253.177
+Managed node IP: 3.9.109.19
+
+Passwords are already set up to access them
+
+run ssh ec2-user@13.40.253.177 or ssh ec2-user@3.9.109.19 respectively to access them.
+
+To run the Ansible playbook use the following command from the control node:
+$ ansible-playbook exercise-4-playbook.yml -i my-ansible-inventory --vault-password-file vault_password.txt
+
+use the folowing address to check the to-do app is working:
+http://3.9.109.19:5000/
