@@ -39,7 +39,7 @@
       ansible.builtin.file:
         path: /opt/todoapp
         state: directory
-        mode: '0777'
+        owner: 'ec2-user'
       become: yes
 
     - name: Git checkout
