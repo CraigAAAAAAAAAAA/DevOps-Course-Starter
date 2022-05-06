@@ -4,7 +4,8 @@ RUN apt-get update
 RUN apt-get install -y curl
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 RUN poetry
-COPY . /app/
+COPY . /app
+COPY requirements.txt /app
 ENTRYPOINT [ ""./todo_app"" ]
 CMD [ "run flask run"]
 EXPOSE 8080/tcp
