@@ -1,8 +1,7 @@
 #Stage 1 - Base
 FROM python:3.10-slim-bullseye as build
 WORKDIR /app
-RUN apt-get update
-RUN apt-get install -y curl
+RUN apt-get update && apt-get install -y curl
 COPY . /app
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 ENV PATH=$PATH:/root/.poetry/bin
