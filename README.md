@@ -86,3 +86,54 @@ http://3.9.109.19:5000/
 Note the above link will not work once the VM's are torn down.
 
 For more information on using ansible modules - see https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html
+
+## Docker
+
+Ensure you have Docker Desktop installed. Visit: https://www.docker.com/products/docker-desktop/
+For Windows: https://docs.docker.com/desktop/windows/install/
+
+Sign up up for a free Docker account: https://hub.docker.com/signup
+
+Docker Desktop will need to be running for the images and containers to work.
+
+Install the Docker extension in VS Code
+
+A multistaged dockerfile has been set up which includes a base build, a dev build and a production build. The dev build uses Flask to run whilst Development is using Gunicorn.
+
+The dev image is using port 5000 
+The prod image is using port 8000
+
+## Building containers - commands:
+
+To build the dev container - input the following command in the terminal:
+
+docker build --target development --tag todo_app:dev .
+
+To build the prod container - input the following command in the terminal:
+
+docker build --target production --tag todo_app:prod .
+
+## Running Containers:
+
+To run the dev container with a bind mount to allow live updates in the todo application use the following command:
+
+docker run --env-file .env -p 5000:5000 --mount type=bind,source=$(pwd)/todo_app,target=/app/todo_app todo_app:dev
+
+To run the prod container:
+
+docker run --env-file .env -p 8000:8000 -it  todo_app:prod
+This container doesn't require a bind mount displaying live app changes updates since this should be done in the dev environment. 
+
+## To view the app:
+Run the containers then in a browser type:
+
+localhost:5000 - Dev
+localhost:8000 - Prod
+
+To view the Docker documentation visit - https://docs.docker.com/get-started/overview/
+To change the base image tag e.g. python:3.10-slim-bullseye visit: https://hub.docker.com/_/python
+note - this is a python app so you'll need to use one specific to python. Remember to rebuild the image after any changes are made to the dockerfile. 
+
+To remove unwanted container use the following command in the terminal - docker container prune
+This removes all of them, to remove them individually in VS Code right click on the container to be removed and select remove. 
+Make sure the container has been stopped before its removed. 
