@@ -7,8 +7,8 @@ services:
       target: development
     volumes:
       - type: bind
-        source: \Users\craig\Apprenticeship\DevOps-Course-Starter\todo_app
-        target: /app/todo_app todo_app:dev
+        source: ./todo_app
+        target: /app/todo_app
     ports: 
       - 5000:5000
     env_file: .env

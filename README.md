@@ -137,3 +137,9 @@ note - this is a python app so you'll need to use one specific to python. Rememb
 To remove unwanted container use the following command in the terminal - docker container prune
 This removes all of them, to remove them individually in VS Code right click on the container to be removed and select remove. 
 Make sure the container has been stopped before its removed. 
+
+## Docker Compose
+
+To run the containers using the docker-compose.yml file type 'docker compose up' in the terminal. This will run both the dev and prod environments without needing to write long commands running them individually. To take them down again press ctrl c. 
+
+Refresh the dev environment on localhost:5000 to see any changes made to the application. 
