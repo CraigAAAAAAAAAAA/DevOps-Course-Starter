@@ -20,6 +20,5 @@ ENTRYPOINT poetry run gunicorn --bind=0.0.0.0 "todo_app.app:create_app()"
 EXPOSE 8000
 
 #Stage 4 - testing
-FROM build as test
-RUN pip install pytest
-RUN poetry run pytest
+FROM development as test
+ENTRYPOINT poetry run pytest

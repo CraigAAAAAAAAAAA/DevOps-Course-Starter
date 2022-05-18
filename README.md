@@ -143,3 +143,13 @@ Make sure the container has been stopped before its removed.
 To run the containers using the docker-compose.yml file type 'docker compose up' in the terminal. This will run both the dev and prod environments without needing to write long commands running them individually. To take them down again press ctrl c. 
 
 Refresh the dev environment on localhost:5000 to see any changes made to the application. 
+
+## Testing in Docker
+
+To run the test container use the following commands in the terminal:
+
+Build:
+docker build --target test --tag todo_app:test .  
+
+Run:
+docker run --env-file .env.test todo_app:test 
