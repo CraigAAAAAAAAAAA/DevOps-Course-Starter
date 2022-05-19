@@ -22,3 +22,7 @@ EXPOSE 8000
 #Stage 4 - testing
 FROM development as test
 ENTRYPOINT poetry run pytest
+
+#Stage 5 - watchdogtest
+FROM test as watchdogtest
+ENTRYPOINT poetry run watchmedo shell-command --patterns="*.py;*.html" --recursive --command="poetry run pytest"

@@ -153,3 +153,17 @@ docker build --target test --tag todo_app:test .
 
 Run:
 docker run --env-file .env.test todo_app:test 
+
+To run tests whenever a change is made utilising Watchdog's watchmedo feature run the following in the command line:
+
+poetry run watchmedo shell-command --patterns="*.py;*.html" --recursive --command="poetry run pytest"
+
+This command looks for any changes in files ending .py or .html. 
+
+To buid and run a container that runs tests when changes are made, use:
+
+docker build --target watchdogtest --tag todo_app:watchdogtest .
+
+docker run --env-file .env.test --mount type=bind,source=$(pwd)/todo_app,target=/app/todo_app todo_app:watchdogtest
+
+Or to run it as part of the Docker Compose .yml file use Docker Compose Up as before.
