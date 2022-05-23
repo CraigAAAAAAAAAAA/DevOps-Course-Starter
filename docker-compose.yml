@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  dev:
+    build:
+      context: .
+      target: development
+    volumes:
+      - type: bind
+        source: ./todo_app
+        target: /app/todo_app
+    ports: 
+      - 5000:5000
+    env_file: .env
+  
+  prod:
+    build:
+      context: .
+      target: production
+    ports: 
+      - 8000:8000
+    env_file: .env
+  
+  test:
+    build:
+      context: .
+      target: watchdogtest
+    volumes:
+      - type: bind
+        source: ./todo_app
+        target: /app/todo_app
+    env_file: .env.test

@@ -1,0 +1,3 @@
+.env
+ansible_playbook.yml
+inventory.ini
