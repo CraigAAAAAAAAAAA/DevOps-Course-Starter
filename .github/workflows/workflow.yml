@@ -25,7 +25,7 @@ jobs:
     - name: run synk test
       run: snyk test
     - name: auth synk
-      run: auth synk
+      run: synk auth
     env:
       synk_token: ${{secrets.SYNK_TOKEN}}
 
