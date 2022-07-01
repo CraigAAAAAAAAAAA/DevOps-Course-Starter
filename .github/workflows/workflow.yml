@@ -22,6 +22,7 @@ jobs:
 
     - name: Snyk
       uses: snyk/actions@0.3.0
+    - name: run synk test
       run: snyk test
     env:
       synk_token: ${{secrets.SYNK_TOKEN}}
