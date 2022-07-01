@@ -19,12 +19,10 @@ jobs:
 
     - name: run docker test container
       run: docker run --env-file .env.test todo_app:test
-
-    - name: Snyk
-      uses: snyk/actions@0.3.0
-    - name: run synk test
-      run: snyk test
-      continue-on-error: true
-    env:
-      SYNK_TOKEN: ${{ secrets.SYNK_TOKEN }}
+    
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/python@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+ 
 
