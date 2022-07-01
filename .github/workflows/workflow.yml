@@ -1,14 +1,9 @@
 name: Continuous Integration 
 on: 
   push:
-    branches:
-      - master
-      - develop
     paths-ignore:
       - README.md
   pull_request:
-    branches:
-      - master
     paths-ignore:
       - README.md 
 
