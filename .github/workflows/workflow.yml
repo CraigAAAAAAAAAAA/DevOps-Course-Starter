@@ -24,6 +24,7 @@ jobs:
       uses: snyk/actions@0.3.0
     - name: run synk test
       run: snyk test
+      continue-on-error: true
     env:
-      synk_token: ${{SYNK_TOKEN}}
+      SYNK_TOKEN: ${{ secrets.SYNK_TOKEN }}
 
