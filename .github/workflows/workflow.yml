@@ -1,13 +1,7 @@
 name: Continuous Integration 
 on:
   schedule:
-    - cron: '45 12 * * 1,3'
-  push:
-    paths-ignore:
-      - README.md
-  pull_request:
-    paths-ignore:
-      - README.md 
+  - cron: '50 12 * * *'
 
 jobs:
   build:
