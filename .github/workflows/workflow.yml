@@ -1,5 +1,7 @@
 name: Continuous Integration 
-on: 
+on:
+  schedule:
+    - cron: '45 12 * * 1,3'
   push:
     paths-ignore:
       - README.md
