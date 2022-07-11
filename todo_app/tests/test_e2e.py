@@ -73,7 +73,7 @@ def delete_trello_board(board_id):
 def driver():
     opts = Options()
     opts.headless = True
-    with webdriver.Firefox() as driver:
+    with webdriver.Firefox(options=opts) as driver:
         yield driver
 
 def test_task_journey(driver, app_with_temp_board):
