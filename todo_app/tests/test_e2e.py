@@ -3,7 +3,6 @@ import pytest
 from threading import Thread
 from time import sleep
 import requests
-from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from dotenv import load_dotenv
 from todo_app import app
