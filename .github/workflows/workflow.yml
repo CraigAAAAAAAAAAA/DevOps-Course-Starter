@@ -26,7 +26,7 @@ jobs:
       run: docker run -e TRELLO_API_KEY=${{secrets.TRELLO_API_KEY}} -e TRELLO_API_TOKEN=${{secrets.TRELLO_API_TOKEN}} -e TRELLO_BOARD_ID=${{secrets.TRELLO_BOARD_ID}} -e TRELLO_LIST_TODO=TRELLO_BOARD_ID=${{secrets.TRELLO_LIST_TODO}} -e TRELLO_LIST_IN_PROGRESS=${{secrets.ENV_TRELLO_LIST_IN_PROGRESS}} -e TRELLO_LIST_DONE=${{secrets.TRELLO_LIST_DONE}}  .env.test todo_app:test
     
     - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/python@master-
+      uses: snyk/actions/python@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     
