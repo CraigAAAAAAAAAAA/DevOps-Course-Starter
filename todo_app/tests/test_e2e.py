@@ -4,6 +4,7 @@ from threading import Thread
 from time import sleep
 import requests
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
 from dotenv import load_dotenv
 from todo_app import app
 
@@ -49,32 +50,29 @@ def create_trello_board():
 
     response = requests.request("POST", url, params=querystring)
 
-    board_id = response.json()['board_id']
+    board_id = response.json()['id']
     
     return board_id
 
 def delete_trello_board(board_id):
     # TODO Delete the Trello board with id board_id
 
-    url = "https://api.trello.com/1/boards/{id}"
-
-    board_id = {id}
+    url = f"https://api.trello.com/1/boards/{board_id}"
 
     querystring = {
     "key":os.getenv("TRELLO_API_KEY"),
     "token":os.getenv("TRELLO_API_TOKEN"),
-    "board_id" : {id}
 
     }
 
     response = requests.request("DELETE", url, params=querystring)
 
-    board_id = response.json()['{id}']
-    
-    return board_id
+    response.raise_for_status()
 
 @pytest.fixture(scope="module")
 def driver():
+    opts = Options()
+    opts.headless = True
     with webdriver.Firefox() as driver:
         yield driver
 
