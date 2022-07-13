@@ -21,7 +21,7 @@ EXPOSE 8000
 
 #Stage 4 - testing
 FROM development as test
-ENV GECKODRIVER_VER v0.29.1
+ENV GECKODRIVER_VER v0.31.0
  
 # Install the long-term support version of Firefox (and curl if you don't have it already)
 RUN apt-get update && apt-get install -y firefox-esr curl
@@ -32,7 +32,7 @@ RUN curl -sSLO https://github.com/mozilla/geckodriver/releases/download/${GECKOD
    && mv geckodriver /usr/bin/ \
    && rm geckodriver-*.tar.gz
 
-ENTRYPOINT poetry run pytest
+ENTRYPOINT ["poetry", "run", "pytest"]
 
 #Stage 5 - watchdogtest
 FROM test as watchdogtest
