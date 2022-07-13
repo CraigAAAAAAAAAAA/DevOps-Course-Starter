@@ -66,6 +66,8 @@ This project contains 2 units tests, the first test checks that a new task calle
 
 There is also an integration test which use mocked data from .env.test to ensure there is a response from Trello and that a new card is added to a list. 
 
+Additionally test_e2e.py tests that a board can be set up and deleted. 
+
 To execute the tests run: poetry run pytest on the command line.
 
 ## SSH and running from VM/Ansible
@@ -151,8 +153,14 @@ To run the test container use the following commands in the terminal:
 Build:
 docker build --target test --tag todo_app:test .  
 
-Run:
-docker run --env-file .env.test todo_app:test 
+Run integration tests:
+docker run --env-file .env.test todo_app:test todo_app/tests/test_app.py
+
+Run unit tests:
+docker run --env-file .env.test todo_app:test todo_app/tests/test_unit.py
+
+Run E2E tests:
+docker run -e TRELLO_API_KEY=${{secrets.TRELLO_API_KEY}} -e TRELLO_API_TOKEN=${{secrets.TRELLO_API_TOKEN}} -e SECRET_KEY=anything todo_app:test todo_app/tests/test_e2e.py
 
 To run tests whenever a change is made utilising Watchdog's watchmedo feature run the following in the command line:
 
@@ -167,3 +175,9 @@ docker build --target watchdogtest --tag todo_app:watchdogtest .
 docker run --env-file .env.test --mount type=bind,source=$(pwd)/todo_app,target=/app/todo_app todo_app:watchdogtest
 
 Or to run it as part of the Docker Compose .yml file use Docker Compose Up as before.
+
+## Continuous Integration
+Tests have been configured to set up and run docker containers everytime there is a push or pull on the repo, as well at 23:00 UTC without any changes being made. 
+
+## Security Scan
+As part of the CI tests, Synk is used to check for any vulnerabilities in the code. 

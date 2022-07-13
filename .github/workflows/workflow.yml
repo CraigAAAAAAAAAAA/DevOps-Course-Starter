@@ -1,0 +1,44 @@
+name: Continuous Integration 
+on:
+  push:
+    paths-ignore:
+      - README.md
+  pull_request:
+    paths-ignore:
+      - README.md 
+  schedule:
+    - cron: "0 23 * * *"
+
+jobs:
+  build:
+    name: Build and test 
+    runs-on: ubuntu-latest
+    
+    steps: 
+    - uses: actions/checkout@v2 
+    - name: build test docker image
+      run: docker build --target test --tag todo_app:test .
+
+    - name: run docker integration test container
+      run: docker run --env-file .env.test todo_app:test todo_app/tests/test_app.py
+      
+    - name: run docker unit test container
+      run: docker run --env-file .env.test todo_app:test todo_app/tests/test_unit.py
+
+    - name: run docker E2E test container
+      run: docker run -e TRELLO_API_KEY=${{secrets.TRELLO_API_KEY}} -e TRELLO_API_TOKEN=${{secrets.TRELLO_API_TOKEN}} -e SECRET_KEY=anything todo_app:test todo_app/tests/test_e2e.py
+    
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/python@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    
+    - name: Run Snyk to check static code
+      uses: snyk/actions/python@master
+      env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+          command: code test
+          
+ 
+
