@@ -118,3 +118,8 @@ env/
 
 ### Configuration files ###
 .env
+
+geckodriver.exe
+geckodriver.log
+
+.dccache
