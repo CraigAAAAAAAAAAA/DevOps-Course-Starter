@@ -45,7 +45,10 @@ jobs:
     needs: build
     
     steps: 
-    - uses: actions/checkout@v2
+    - name: checkout
+      uses: actions/checkout@v2
+    
+    - name: test seocond job
       run: echo "Publishing!"
           
  
