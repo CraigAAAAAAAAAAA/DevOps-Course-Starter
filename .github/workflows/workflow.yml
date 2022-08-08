@@ -39,6 +39,14 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
           command: code test
+    
+  production:
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps: 
+    - uses: actions/checkout@v2
+      run: echo "Publishing!"
           
  
 
