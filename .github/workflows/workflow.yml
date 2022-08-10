@@ -53,7 +53,10 @@ jobs:
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
     - name: build production image
-      run: docker build --target production --tag todo_app:prod .
+      run: docker build --target production --tag craigbeasley/todo_app:prod .
+    
+    - name: push docker image
+      run: docker push craigbeasley/todo_app:prod
           
  
 
