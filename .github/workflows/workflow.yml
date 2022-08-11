@@ -51,15 +51,6 @@ jobs:
 
     - uses: satackey/action-docker-layer-caching@v0.0.11
     
-    - name: docker login
-      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-
-    - name: build production image
-      run: docker build --target production --tag craigbeasley/todo_app:prod .
-    
-    - name: push docker image
-      run: docker push craigbeasley/todo_app:prod
-
     - name: Build, Push and Release a Docker container to Heroku
       uses: gonuit/heroku-docker-deploy@v1.3.3
       with:
@@ -69,3 +60,12 @@ jobs:
         dockerfile_directory: ./
         dockerfile_name: Dockerfile
         process_type: web
+        
+    - name: docker login
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: build production image
+      run: docker build --target production --tag craigbeasley/todo_app:prod .
+    
+    - name: push docker image
+      run: docker push craigbeasley/todo_app:prod
