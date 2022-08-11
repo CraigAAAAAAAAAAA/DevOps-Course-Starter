@@ -69,18 +69,3 @@ jobs:
         dockerfile_directory: ./
         dockerfile_name: Dockerfile
         process_type: web
-
-    - name: Heroku log in
-      run: heroku container:login -u ${{ secrets.HEROKU_USERNAME }} -p ${{ secrets.HEROKU_PASSWORD }}
-    
-    - name: build docker image to Heroku
-      run: docker build --target production --tag  registry.heroku.com/my-stuff-todo/web .
-    
-    - name: Push docker image to Heroku
-      run: docker push registry.heroku.com/my-stuff-todo/web
-    
-    - name: Heroku container deployment
-      run: heroku container:release web --app my-stuff-todo  
-
-
-
