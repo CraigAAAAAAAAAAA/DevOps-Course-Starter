@@ -14,15 +14,7 @@ RUN poetry install
 ENTRYPOINT poetry run flask run --host=0.0.0.0
 EXPOSE 5000
 
-#Stage 3 - production
-FROM build as production
-ENV PORT=8000
-COPY entrypoint.sh .
-RUN chmod +x ./entrypoint.sh
-ENTRYPOINT ./entrypoint.sh
-EXPOSE 8000
-
-#Stage 4 - testing
+#Stage 3 - testing
 FROM development as test
 ENV GECKODRIVER_VER v0.31.0
  
@@ -37,6 +29,14 @@ RUN curl -sSLO https://github.com/mozilla/geckodriver/releases/download/${GECKOD
 
 ENTRYPOINT ["poetry", "run", "pytest"]
 
-#Stage 5 - watchdogtest
+#Stage 4 - watchdogtest
 FROM test as watchdogtest
 ENTRYPOINT poetry run watchmedo shell-command --patterns="*.py;*.html" --recursive --command="poetry run pytest"
+
+#Stage 5 - production
+FROM build as production
+ENV PORT=8000
+COPY entrypoint.sh .
+RUN chmod +x ./entrypoint.sh
+ENTRYPOINT ./entrypoint.sh
+EXPOSE 8000
