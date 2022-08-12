@@ -181,3 +181,10 @@ Tests have been configured to set up and run docker containers everytime there i
 
 ## Security Scan
 As part of the CI tests, Synk is used to check for any vulnerabilities in the code. 
+
+## Continuous Deployment
+After tests are complete, the app is set up to continually deploy when there is a push to the main branch. It pushes a production image to Docker Hub and to Heroku
+
+## Deployment
+The to-do app is deployed via Heroku at https://my-stuff-todo.herokuapp.com/
+
