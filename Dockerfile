@@ -5,7 +5,7 @@ RUN apt-get update && apt-get install -y curl
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 ENV PATH=$PATH:/root/.poetry/bin
 COPY poetry.lock poetry.toml pyproject.toml /app/
-RUN poetry install --no-dev
+RUN poetry config virtualenvs.create false --local && poetry install
 COPY todo_app ./todo_app
 
 #Stage 2 - development
@@ -14,12 +14,7 @@ RUN poetry install
 ENTRYPOINT poetry run flask run --host=0.0.0.0
 EXPOSE 5000
 
-#Stage 3 - production
-FROM build as production
-ENTRYPOINT poetry run gunicorn --bind=0.0.0.0 "todo_app.app:create_app()"
-EXPOSE 8000
-
-#Stage 4 - testing
+#Stage 3 - testing
 FROM development as test
 ENV GECKODRIVER_VER v0.31.0
  
@@ -34,6 +29,14 @@ RUN curl -sSLO https://github.com/mozilla/geckodriver/releases/download/${GECKOD
 
 ENTRYPOINT ["poetry", "run", "pytest"]
 
-#Stage 5 - watchdogtest
+#Stage 4 - watchdogtest
 FROM test as watchdogtest
 ENTRYPOINT poetry run watchmedo shell-command --patterns="*.py;*.html" --recursive --command="poetry run pytest"
+
+#Stage 5 - production - this stage needs to be last otherwise the CD pipeline through Heroku will not work
+FROM build as production
+ENV PORT=8000
+COPY entrypoint.sh .
+RUN chmod +x ./entrypoint.sh
+ENTRYPOINT ./entrypoint.sh
+EXPOSE 8000
