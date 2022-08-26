@@ -33,7 +33,7 @@ ENTRYPOINT ["poetry", "run", "pytest"]
 FROM test as watchdogtest
 ENTRYPOINT poetry run watchmedo shell-command --patterns="*.py;*.html" --recursive --command="poetry run pytest"
 
-#Stage 5 - production
+#Stage 5 - production - this stage needs to be last otherwise the CD pipeline through Heroku will not work
 FROM build as production
 ENV PORT=8000
 COPY entrypoint.sh .
