@@ -3,7 +3,7 @@ FROM python:3.10-slim-bullseye as build
 WORKDIR /app
 RUN apt-get update && apt-get install -y curl
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -
-ENV PATH=$PATH:/root/.poetry/bin
+ENV PATH=$PATH:/root/.local/bin
 COPY poetry.lock poetry.toml pyproject.toml /app/
 RUN poetry config virtualenvs.create false --local && poetry install
 COPY todo_app ./todo_app
