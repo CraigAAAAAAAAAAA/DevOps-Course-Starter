@@ -186,5 +186,5 @@ As part of the CI tests, Synk is used to check for any vulnerabilities in the co
 After tests are complete, the app is set up to continually deploy when there is a push to the main branch. It pushes a production image to Docker Hub and to Heroku
 
 ## Deployment
-The to-do app is deployed via Heroku at https://my-stuff-todo.herokuapp.com/
+The to-do app is deployed via Azure at https://my-stuff-todo.azurewebsites.net
 
