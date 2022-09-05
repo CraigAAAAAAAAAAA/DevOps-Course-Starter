@@ -50,22 +50,15 @@ jobs:
       uses: actions/checkout@v2
 
     - uses: satackey/action-docker-layer-caching@v0.0.11
-    
-    - name: Build, Push and Release a Docker container to Heroku
-      uses: gonuit/heroku-docker-deploy@v1.3.3
-      with:
-        email: ${{ secrets.HEROKU_EMAIL }}
-        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-        heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-        dockerfile_directory: ./
-        dockerfile_name: Dockerfile
-        process_type: web
-        
+           
     - name: docker login
-      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} --password-stdin
+      run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
 
     - name: build production image
       run: docker build --target production --tag craigbeasley/todo_app:prod .
     
     - name: push docker image
       run: docker push craigbeasley/todo_app:prod
+
+    - name: update Azure 
+      run: curl -dH --fail -X POST ${{secrets.AZURE_WEB_HOOK}} 
