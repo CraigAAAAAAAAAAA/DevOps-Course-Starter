@@ -1,20 +1,28 @@
-from gc import collect
-import imp
-from tkinter import E
-from typing import ItemsView
 import pymongo
 import os
 import dotenv
-from todo_app.view_model import items, todo_items, in_progress, done_items
+from bson.objectid import ObjectId
+from todo_app.todo import Item
 
 dotenv.load_dotenv(".env")
 
 def items():
-    return [items]
 
-def todo_items():
+    client = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))
+    database = client[os.getenv("MONGO_DATABASE_NAME")]
+    collection = database['items']
+
+    tasks = []
+
+    for mongo_item in collection.find():
+        new_item = Item(mongo_item["_id"], mongo_item["Todo"], mongo_item["Status"])
+        tasks.append(new_item)
+        
+    return tasks
+
+def add_todo_item(item):
     new_mongo_item = {
-        "Todo": todo_items,
+        "Todo": item,
         "Status": "To_Do"
     }
     client = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))
@@ -23,52 +31,27 @@ def todo_items():
     
     collection.insert_one(new_mongo_item)
 
-def update_status(_id):
-    from bson.objectid import ObjectId
+def update_status(item_id, in_progress):
     
-    ObjectId = ObjectId(_id)
-if todo_items in items == in_progress:
+    item_selector = {'_id': ObjectId(item_id)}
 
     status_update = {
-        "$set": {"Status": in_progress},
-    }
+            "$set": {"Status": in_progress},
+        }
 
-    items.update_one(status_update)
+    client = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))
+    database = client[os.getenv("MONGO_DATABASE_NAME")]
+    collection = database['items']
 
-else:
+
+    collection.update_one(item_selector, status_update) 
+
+def delete_item(item_id):
+
+    item_selector = {'_id': ObjectId(item_id)}
     
-    item_done = {
-        "$set": {"Status": done_items}
-    }
+    client = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))
+    database = client[os.getenv("MONGO_DATABASE_NAME")]
+    collection = database['items']
     
-    items.item_done.delete_one(done_items)
-
-
-# def delete_item_by_status(_id):
-#     from bson.objectid import ObjectId
-
-#     ObjectId = ObjectId(_id)
-
-#     item_done = {
-#         "$set": {"Status": done_items}
-#     }
-    
-#     collection.item_delete.delete_one(done_items)
-    
-#     client = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))
-#     database = client[os.getenv("MONGO_DATABASE_NAME")]
-#     collection = database['items']
-
-# def update_status(Status):
-#     _update = {
-#         "$set": {"Status": "Done"}
-#     }
-#     collection.update_one(_update)
-
-# update_status(_update)
-    
-
-# db_entry = {"author": "Craig", "text": "My test"}
-# collection.insert_one(db_entry)
-# documents = list(collection.find())
-# print(documents)
+    collection.delete_one(item_selector)
