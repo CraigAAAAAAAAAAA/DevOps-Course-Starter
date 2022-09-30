@@ -12,13 +12,9 @@ def items():
     database = client[os.getenv("MONGO_DATABASE_NAME")]
     collection = database['items']
 
-    tasks = []
+    mongo_items = collection.find()
 
-    for mongo_item in collection.find():
-        new_item = Item(mongo_item["_id"], mongo_item["Todo"], mongo_item["Status"])
-        tasks.append(new_item)
-        
-    return tasks
+    return [Item.from_mongo_item(mongo_item) for mongo_item in mongo_items]
 
 def add_todo_item(item):
     new_mongo_item = {
