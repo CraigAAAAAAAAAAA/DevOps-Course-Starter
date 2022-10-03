@@ -17,7 +17,7 @@ def create_app():
         return render_template('index.html',
         view_model=item_view_model)
 
-    @app.route('/add_item', methods=['POST'])
+    @app.route('/add_task', methods=['POST'])
     def add_new_item():
 
         title = request.form['todo_title']
@@ -25,18 +25,18 @@ def create_app():
         
         return redirect ('/')
 
-    @app.route('/in_progress', methods=['POST'])
+    @app.route('/progress', methods=['POST'])
     def in_progress():
 
-        item_id = request.form[item_id, "In progress"]
-        update_status(item_id)
+        item_id = request.form['item_id']
+        update_status(item_id, 'in progress')
   
         return redirect ('/')
         
     @app.route('/mark_done', methods=['POST'])
     def mark_done():
 
-        item_id = request.form[item_id]
+        item_id = request.form['item_id']
         delete_item(item_id)
         
         return index ()

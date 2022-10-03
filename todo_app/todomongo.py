@@ -16,10 +16,10 @@ def items():
 
     return [Item.from_mongo_item(mongo_item) for mongo_item in mongo_items]
 
-def add_todo_item(item):
+def add_todo_item(items):
     new_mongo_item = {
-        "Todo": item,
-        "Status": "To_Do"
+        "Todo": items,
+        "Status": "To Do"
     }
     client = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))
     database = client[os.getenv("MONGO_DATABASE_NAME")]
@@ -27,12 +27,12 @@ def add_todo_item(item):
     
     collection.insert_one(new_mongo_item)
 
-def update_status(item_id, in_progress):
+def update_status(item_id, progress):
     
     item_selector = {'_id': ObjectId(item_id)}
 
     status_update = {
-            "$set": {"Status": in_progress},
+            "$set": {"Status": progress}
         }
 
     client = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))

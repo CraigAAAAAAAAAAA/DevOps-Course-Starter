@@ -6,4 +6,4 @@ class Item:
 
     @classmethod
     def from_mongo_item(cls, mongo_item):
-        return cls(mongo_item['_id'], mongo_item['task'], mongo_item['Status'])
+        return cls(mongo_item['_id'], mongo_item['Todo'], mongo_item['Status'])
