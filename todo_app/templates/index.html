@@ -31,7 +31,7 @@
                   {% endif %}
                   {% if item.status != "Done"%}
                   <form action="mark_done" method="post" class="form-example">
-                    <input type="hidden" value="{{item.id}}" name="card_id">
+                    <input type="hidden" value="{{item.id}}" name="item_id">
                     <input type="submit" value="Done!">
                   </form>
                   {% endif %}
