@@ -61,7 +61,7 @@ def delete_testdb():
 @pytest.fixture(scope="module")
 def driver():
     opts = Options()
-    opts.headless = False
+    opts.headless = True
     with webdriver.Firefox(options=opts) as driver:
         yield driver
 
