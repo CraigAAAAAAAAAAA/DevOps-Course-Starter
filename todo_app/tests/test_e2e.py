@@ -16,7 +16,10 @@ def app_with_temp_db():
 
     # Create the new board & update the board id environment variable
     test_db = items()
-    os.environ['TEST_MONGO_DATABASE_NAME'] = test_db
+    
+    client = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))
+    database = client[os.getenv("TEST_MONGO_DATABASE_NAME")]
+    collection = database['test_items']
 
     # Construct the new application
     application = app.create_app()
@@ -35,7 +38,7 @@ def app_with_temp_db():
     # Tear down
     thread.join(1)
     # deepcode ignore WrongNumberOfArguments/test: <please specify a reason of ignoring this>
-    delete_testdb(test_db)
+    delete_testdb()
 
 def items():
 
@@ -62,7 +65,7 @@ def driver():
     with webdriver.Firefox(options=opts) as driver:
         yield driver
 
-def test_task_journey(driver):
+def test_task_journey(driver, app_with_temp_db):
     driver.get('http://localhost:5000/')
 
     assert driver.title == 'To-Do App'
