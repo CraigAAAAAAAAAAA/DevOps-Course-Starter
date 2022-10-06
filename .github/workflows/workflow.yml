@@ -26,7 +26,7 @@ jobs:
       run: docker run --env-file .env.test todo_app:test todo_app/tests/test_unit.py
 
     - name: run docker E2E test container
-      run: docker run -e MONGO_CONNECTION_STRING=${{secrets.MONGO_CONNECTION_STRING}} -e TEST_MONGO_DATABASE_NAME=${{secrets.TEST_MONGO_DATABASE_NAME}} -e SECRET_KEY=anything todo_app:test todo_app/tests/test_e2e.py
+      run: docker run -e MONGO_CONNECTION_STRING=${{secrets.MONGO_CONNECTION_STRING}} -e MONGO_DATABASE_NAME=${{secrets.MONGO_DATABASE_NAME}} -e SECRET_KEY=anything todo_app:test todo_app/tests/test_e2e.py
     
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/python@master
