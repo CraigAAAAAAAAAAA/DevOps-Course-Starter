@@ -1,10 +1,7 @@
 import pymongo
 import os
-import dotenv
 from bson.objectid import ObjectId
 from todo_app.todo import Item
-
-dotenv.load_dotenv(".env")
 
 def items():
 
