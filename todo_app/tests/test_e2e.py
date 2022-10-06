@@ -18,7 +18,7 @@ def app_with_temp_db():
     test_db = items()
     
     client = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))
-    database = client[os.getenv("TEST_MONGO_DATABASE_NAME")]
+    database = client[os.getenv("MONGO_DATABASE_NAME")]
     collection = database['test_items']
 
     # Construct the new application
@@ -43,7 +43,7 @@ def app_with_temp_db():
 def items():
 
     client = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))
-    database = client[os.getenv("TEST_MONGO_DATABASE_NAME")]
+    database = client[os.getenv("MONGO_DATABASE_NAME")]
     collection = database['test_items']
 
     mongo_items = collection.find()
@@ -53,7 +53,7 @@ def items():
 def delete_testdb():
     
     client = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))
-    database = client[os.getenv("TEST_MONGO_DATABASE_NAME")]
+    database = client[os.getenv("MONGO_DATABASE_NAME")]
     collection = database['test_items']
     
     collection.drop()
