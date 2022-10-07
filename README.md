@@ -188,3 +188,8 @@ After tests are complete, the app is set up to continually deploy when there is 
 ## Deployment
 The to-do app is deployed via Azure at https://my-stuff-todo.azurewebsites.net
 
+## MongoDB
+The code has been updated to use MongoDB to hold tasks added to the app, change the status to in progress and then delete document from the collection when its been completed. 
+
+Testing has been updated to reflect the move away from Trello and now tests that the DB works as expected and that the app can still be set up and taken down. 
+
