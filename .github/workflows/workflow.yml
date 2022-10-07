@@ -28,22 +28,22 @@ jobs:
     - name: run docker E2E test container
       run: docker run -e MONGO_CONNECTION_STRING='${{secrets.MONGO_CONNECTION_STRING}}' -e MONGO_DATABASE_NAME='${{secrets.MONGO_DATABASE_NAME}}' -e SECRET_KEY=anything todo_app:test todo_app/tests/test_e2e.py
     
-    - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/python@master
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    # - name: Run Snyk to check for vulnerabilities
+    #   uses: snyk/actions/python@master
+    #   env:
+    #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     
-    - name: Run Snyk to check static code
-      uses: snyk/actions/python@master
-      env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-          command: code test
+    # - name: Run Snyk to check static code
+    #   uses: snyk/actions/python@master
+    #   env:
+    #       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    #   with:
+    #       command: code test
     
   production:
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/Module-10'
 
     steps: 
     - name: checkout
