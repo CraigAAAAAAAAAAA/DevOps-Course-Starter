@@ -26,17 +26,17 @@ jobs:
       run: docker run --env-file .env.test todo_app:test todo_app/tests/test_unit.py
 
     - name: run docker E2E test container
-      run: docker run -e MONGO_CONNECTION_STRING=${{secrets.MONGO_CONNECTION_STRING}} -e MONGO_DATABASE_NAME=${{secrets.MONGO_DATABASE_NAME}} -e SECRET_KEY=anything todo_app:test todo_app/tests/test_e2e.py
+      run: docker run -e MONGO_CONNECTION_STRING='${{secrets.MONGO_CONNECTION_STRING}}' -e MONGO_DATABASE_NAME='${{secrets.MONGO_DATABASE_NAME}}' -e SECRET_KEY=anything todo_app:test todo_app/tests/test_e2e.py
     
     - name: Run Snyk to check for vulnerabilities
       uses: snyk/actions/python@master
       env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        SNYK_TOKEN: '${{ secrets.SNYK_TOKEN }}'
     
     - name: Run Snyk to check static code
       uses: snyk/actions/python@master
       env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_TOKEN: '${{ secrets.SNYK_TOKEN }}'
       with:
           command: code test
     
@@ -52,7 +52,7 @@ jobs:
     - uses: satackey/action-docker-layer-caching@v0.0.11
            
     - name: docker login
-      run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+      run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login -u '${{ secrets.DOCKER_USERNAME }}' --password-stdin
 
     - name: build production image
       run: docker build --target production --tag craigbeasley/todo_app:prod .
@@ -61,4 +61,4 @@ jobs:
       run: docker push craigbeasley/todo_app:prod
 
     - name: update Azure 
-      run: curl -dH --fail -X POST ${{secrets.AZURE_WEB_HOOK}} 
+      run: curl -dH --fail -X POST '${{secrets.AZURE_WEB_HOOK}}' 
