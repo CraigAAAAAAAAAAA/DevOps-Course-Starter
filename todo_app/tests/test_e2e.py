@@ -15,7 +15,6 @@ def app_with_temp_db():
     load_dotenv(override=True)
 
     # Create the new board & update the board id environment variable
-    test_db = items()
     
     client = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))
     database = client[os.getenv("MONGO_DATABASE_NAME")]
@@ -37,7 +36,6 @@ def app_with_temp_db():
 
     # Tear down
     thread.join(1)
-    # deepcode ignore WrongNumberOfArguments/test: <please specify a reason of ignoring this>
     delete_testdb()
 
 def items():
