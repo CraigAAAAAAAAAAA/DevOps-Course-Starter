@@ -2,20 +2,23 @@ import os
 import pytest
 from threading import Thread
 from time import sleep
-import requests
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from dotenv import load_dotenv
 from todo_app import app
+from todo_app.todo import Item
+import pymongo
 
 @pytest.fixture(scope='module')
-def app_with_temp_board():
+def app_with_temp_db():
     # Load our real environment variables
     load_dotenv(override=True)
 
     # Create the new board & update the board id environment variable
-    board_id = create_trello_board()
-    os.environ['TRELLO_BOARD_ID'] = board_id
+    
+    client = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))
+    database = client[os.getenv("MONGO_DATABASE_NAME")]
+    collection = database['test_items']
 
     # Construct the new application
     application = app.create_app()
@@ -33,41 +36,25 @@ def app_with_temp_board():
 
     # Tear down
     thread.join(1)
-    delete_trello_board(board_id)
+    delete_testdb()
 
-def create_trello_board():
-    # TODO Create a new board in Trello and return the id
-    url = "https://api.trello.com/1/boards"
+def items():
 
-    title = 'test_board'
+    client = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))
+    database = client[os.getenv("MONGO_DATABASE_NAME")]
+    collection = database['test_items']
 
-    querystring = {
-    "key":os.getenv("TRELLO_API_KEY"),
-    "token":os.getenv("TRELLO_API_TOKEN"),
-    "name" : title
+    mongo_items = collection.find()
 
-    }
+    return [Item.from_mongo_item(mongo_item) for mongo_item in mongo_items]
 
-    response = requests.request("POST", url, params=querystring)
-
-    board_id = response.json()['id']
+def delete_testdb():
     
-    return board_id
-
-def delete_trello_board(board_id):
-    # TODO Delete the Trello board with id board_id
-
-    url = f"https://api.trello.com/1/boards/{board_id}"
-
-    querystring = {
-    "key":os.getenv("TRELLO_API_KEY"),
-    "token":os.getenv("TRELLO_API_TOKEN"),
-
-    }
-
-    response = requests.request("DELETE", url, params=querystring)
-
-    response.raise_for_status()
+    client = pymongo.MongoClient(os.getenv("MONGO_CONNECTION_STRING"))
+    database = client[os.getenv("MONGO_DATABASE_NAME")]
+    collection = database['test_items']
+    
+    collection.drop()
 
 @pytest.fixture(scope="module")
 def driver():
@@ -76,7 +63,7 @@ def driver():
     with webdriver.Firefox(options=opts) as driver:
         yield driver
 
-def test_task_journey(driver, app_with_temp_board):
+def test_task_journey(driver, app_with_temp_db):
     driver.get('http://localhost:5000/')
 
     assert driver.title == 'To-Do App'

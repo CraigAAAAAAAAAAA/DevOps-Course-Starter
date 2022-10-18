@@ -7,7 +7,7 @@
     <p class="lead">What needs doing today?.</p>
   </div>
 
-  <form action="add_card" method="post" class="form-example">
+  <form action="add_task" method="post" class="form-example">
     <div class="form-example">
       <label for="name"> Add item: </label>
       <input type="text" name="todo_title" id="todo_title" required>
@@ -24,15 +24,15 @@
         {% for item in view_model.items %} 
                 <li>{{ item.name }} - {{item.status}}
                   {% if item.status != "In progress"%}
-                  <form action="in_progress" method="post" class="form-example">
-                    <input type="hidden" value="{{item.id}}" name="card_id">
-                    <input type="submit" value="Doing!!">
+                  <form action="progress" method="post" class="form-example">
+                    <input type="hidden" value="{{item.id}}" name="item_id">
+                    <input type="submit" value="Started">
                   </form>
                   {% endif %}
                   {% if item.status != "Done"%}
                   <form action="mark_done" method="post" class="form-example">
-                    <input type="hidden" value="{{item.id}}" name="card_id">
-                    <input type="submit" value="Done!">
+                    <input type="hidden" value="{{item.id}}" name="item_id">
+                    <input type="submit" value="Delete">
                   </form>
                   {% endif %}
                 </li> 

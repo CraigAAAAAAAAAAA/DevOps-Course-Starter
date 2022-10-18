@@ -34,13 +34,6 @@ $ cp .env.template .env  # (first time only)
 
 The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). There's also a [SECRET_KEY](https://flask.palletsprojects.com/en/1.1.x/config/#SECRET_KEY) variable which is used to encrypt the flask session cookie.
 
-## Create Trello account
-
-To use the app you'll need to create a Trello account at www.trello.com and from there set up a board, lists and cards. Once this is done populate the .env file with the following:
-•	TRELLO_API_KEY
-•	TRELLO_TOKEN
-•	TRELLO_BOARD_ID
-
 ## Running the App
 
 Once the all dependencies have been installed, start the Flask app in development mode within the Poetry environment by running:
@@ -187,4 +180,9 @@ After tests are complete, the app is set up to continually deploy when there is 
 
 ## Deployment
 The to-do app is deployed via Azure at https://my-stuff-todo.azurewebsites.net
+
+## MongoDB
+The code has been updated to use MongoDB to hold tasks added to the app, change the status to in progress and then delete document from the collection when its been completed. 
+
+Testing has been updated to reflect the move away from Trello and now tests that the DB works as expected and that the app can still be set up and taken down. 
 
