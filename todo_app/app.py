@@ -3,13 +3,30 @@ from todo_app.todo import Item
 from todo_app.flask_config import Config
 from todo_app.view_model import ViewModel
 from todo_app.todomongo import add_todo_item, items, update_status, delete_item
+import requests
 
 def create_app():
+
+    login_manager = LoginManager()
+    
+    @login_manager.unauthorized_handler
+    def unauthenticated():
+        pass 
+    response = requests.get(https://github.com/login/oauth/authorize)
+    # Add logic to redirect to the GitHub OAuth flow when unauthenticated
+ 
+    @login_manager.user_loader
+    def load_user(user_id):
+        pass # We will return to this later
+ 
+    login_manager.init_app(app)
+    
     app = Flask(__name__)
     app.config.from_object(Config())
 
 
     @app.route('/')
+    @login_required
 
     def index():
 
@@ -18,6 +35,7 @@ def create_app():
         view_model=item_view_model)
 
     @app.route('/add_task', methods=['POST'])
+    @login_required
     def add_new_item():
 
         title = request.form['todo_title']
@@ -26,6 +44,7 @@ def create_app():
         return redirect ('/')
 
     @app.route('/progress', methods=['POST'])
+    @login_required
     def in_progress():
 
         item_id = request.form['item_id']
@@ -34,6 +53,7 @@ def create_app():
         return redirect ('/')
         
     @app.route('/mark_done', methods=['POST'])
+    @login_required
     def mark_done():
 
         item_id = request.form['item_id']
