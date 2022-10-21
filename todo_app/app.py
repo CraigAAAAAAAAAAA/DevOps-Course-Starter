@@ -25,7 +25,7 @@ def create_app():
                 "client_id":os.getenv("CLIENT_ID")
         }
 
-    response = requests.request.get(url, params=querystring)
+    response = requests.get(url, params=querystring)
 
     response_json = response.json()
 # Add logic to redirect to the GitHub OAuth flow when unauthenticated
