@@ -12,7 +12,11 @@ def create_app():
     @login_manager.unauthorized_handler
     def unauthenticated():
         pass 
-    response = requests.get(https://github.com/login/oauth/authorize)
+        
+    url = f"https://github.com/login/oauth/authorize"
+
+    response = requests.request("GET", url)
+
     # Add logic to redirect to the GitHub OAuth flow when unauthenticated
  
     @login_manager.user_loader
