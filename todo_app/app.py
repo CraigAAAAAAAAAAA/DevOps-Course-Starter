@@ -7,6 +7,7 @@ from todo_app.todomongo import add_todo_item, items, update_status, delete_item
 import requests
 import os
 from flask_login import LoginManager 
+from flask_login import login_required
 
 def create_app():
     
@@ -17,7 +18,7 @@ def create_app():
     
     @login_manager.unauthorized_handler
     def unauthenticated():
-        return redirect ("GET https://github.com/login/oauth/authorize", code=302, response = None)
+        return redirect ('https://github.com/login/oauth/authorize?client_id=51479667196a085f5024')
 # Add logic to redirect to the GitHub OAuth flow when unauthenticated
  
     @login_manager.user_loader
