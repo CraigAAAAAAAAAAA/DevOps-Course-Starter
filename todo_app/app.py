@@ -15,9 +15,16 @@ def create_app():
         
     url = f"https://github.com/login/oauth/authorize"
 
-    response = requests.request("GET", url)
+    response = requests.request("GET", url, params=querystring)
 
-    # Add logic to redirect to the GitHub OAuth flow when unauthenticated
+    querystring = {
+                "client_id":os.getenv("CLIENT_ID")
+        }
+
+    response_json = response.json()
+
+
+# Add logic to redirect to the GitHub OAuth flow when unauthenticated
  
     @login_manager.user_loader
     def load_user(user_id):
