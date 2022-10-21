@@ -1,3 +1,4 @@
+from pickletools import long1
 from flask import Flask, render_template, request, redirect
 from todo_app.todo import Item
 from todo_app.flask_config import Config
@@ -8,6 +9,9 @@ import os
 from flask_login import LoginManager 
 
 def create_app():
+    
+    app = Flask(__name__)
+    app.config.from_object(Config())
 
     login_manager = LoginManager()
     
@@ -17,15 +21,13 @@ def create_app():
         
     url = f"https://github.com/login/oauth/authorize"
 
-    response = requests.request("GET", url, params=querystring)
-
     querystring = {
                 "client_id":os.getenv("CLIENT_ID")
         }
 
+    response = requests.request.get(url, params=querystring)
+
     response_json = response.json()
-
-
 # Add logic to redirect to the GitHub OAuth flow when unauthenticated
  
     @login_manager.user_loader
@@ -34,12 +36,8 @@ def create_app():
  
     login_manager.init_app(app)
     
-    app = Flask(__name__)
-    app.config.from_object(Config())
-
-
     @app.route('/')
-    @login_required
+    @login_required()
 
     def index():
 
