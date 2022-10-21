@@ -17,17 +17,7 @@ def create_app():
     
     @login_manager.unauthorized_handler
     def unauthenticated():
-        pass 
-        
-    url = f"https://github.com/login/oauth/authorize"
-
-    querystring = {
-                "client_id":os.getenv("CLIENT_ID")
-        }
-
-    response = requests.get(url, params=querystring)
-
-    response_json = response.json()
+        return redirect ("GET https://github.com/login/oauth/authorize", code=302, response = None)
 # Add logic to redirect to the GitHub OAuth flow when unauthenticated
  
     @login_manager.user_loader
@@ -37,7 +27,7 @@ def create_app():
     login_manager.init_app(app)
     
     @app.route('/')
-    @login_required()
+    @login_required
 
     def index():
 
