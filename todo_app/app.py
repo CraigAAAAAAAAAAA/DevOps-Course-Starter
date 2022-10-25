@@ -10,16 +10,16 @@ import os
 from flask_login import LoginManager, UserMixin
 from flask_login import login_required
 
+class User (UserMixin):
+    def __init__(self, id):
+        self.id = id
+
 def create_app():
     
     app = Flask(__name__)
     app.config.from_object(Config())
 
     login_manager = LoginManager()
-
-    class user (UserMixin):
-        def __init__(self, id):
-            self.id = id
     
     @login_manager.unauthorized_handler
     def unauthenticated():
@@ -48,6 +48,17 @@ def create_app():
     @app.route('/login/oauth/<access_token>', methods=['GET'])
     def response():
         access_token = request.args.get('access_token')
+
+        Accept: application/json
+        {
+        "access_token": access_token,
+        "scope":"repo,gist",
+        "token_type":"bearer"
+        }
+
+        response = requests.request("POST", params=Accept)
+
+        Accept= response.json()
 
     
     @login_manager.user_loader
