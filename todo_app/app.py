@@ -20,7 +20,12 @@ def create_app():
     def unauthenticated():
         return redirect ('https://github.com/login/oauth/authorize?client_id=51479667196a085f5024')
 # Add logic to redirect to the GitHub OAuth flow when unauthenticated
- 
+    
+    @login_manager._request_callback
+    def callback():
+        
+    
+    
     @login_manager.user_loader
     def load_user(user_id):
         pass # We will return to this later
