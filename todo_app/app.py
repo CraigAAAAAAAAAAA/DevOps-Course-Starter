@@ -1,3 +1,4 @@
+from http import client
 from pickletools import long1
 from flask import Flask, render_template, request, redirect
 from todo_app.todo import Item
@@ -6,7 +7,7 @@ from todo_app.view_model import ViewModel
 from todo_app.todomongo import add_todo_item, items, update_status, delete_item
 import requests
 import os
-from flask_login import LoginManager 
+from flask_login import LoginManager, UserMixin
 from flask_login import login_required
 
 def create_app():
@@ -15,6 +16,10 @@ def create_app():
     app.config.from_object(Config())
 
     login_manager = LoginManager()
+
+    class user (UserMixin):
+        def __init__(self, id):
+            self.id = id
     
     @login_manager.unauthorized_handler
     def unauthenticated():
@@ -23,7 +28,26 @@ def create_app():
     
     @app.route('/login/callback/<code>', methods=['GET'])
     def callback():
-       code = request.args.get('code')
+        code = request.args.get('code')
+        
+        url = 'https://github.com/login/oauth/access_token'
+
+        payload = {
+            "client_id": os.getenv('CLIENT_ID'),
+            "client_secret": os.getenv('CLIENT_SECRET'),
+            "code": code,
+            "redirect_url": 'http//localhost:5000'
+        }
+
+        headers = {
+            "Accept": "application/json"
+        }
+
+        requests.request("POST", url, data = payload, headers = headers)
+    
+    @app.route('/login/oauth/<access_token>', methods=['GET'])
+    def response():
+        access_token = request.args.get('access_token')
 
     
     @login_manager.user_loader
