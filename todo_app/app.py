@@ -30,7 +30,6 @@ def create_app():
     @app.route('/callback', methods=['GET'])
     def callback():
         code = request.args.get('code')
-        
         access_token_url = 'https://github.com/login/oauth/access_token'
 
         payload = {
@@ -52,6 +51,14 @@ def create_app():
         auth_header = {
             "Authorisation": f"Bearer {access_token}"
         }
+
+        user_info_response = requests.get(user_info_url, headers= auth_header)
+
+        user_id = user_info_response.json()['id']
+
+        user = User(user_id)
+
+        login_user(user)
 
     
     @login_manager.user_loader
