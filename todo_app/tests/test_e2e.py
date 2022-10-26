@@ -13,6 +13,7 @@ import pymongo
 def app_with_temp_db():
     # Load our real environment variables
     load_dotenv(override=True)
+    os.environ['LOGIN_DISABLED'] = 'True'
 
     # Create the new board & update the board id environment variable
     

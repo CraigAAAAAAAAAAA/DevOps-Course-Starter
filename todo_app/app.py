@@ -18,6 +18,7 @@ def create_app():
     
     app = Flask(__name__)
     app.config.from_object(Config())
+    app.config['LOGIN_DISABLED'] = os.getenv('LOGIN_DISABLED') == 'True'
 
     login_manager = LoginManager()
     
