@@ -26,39 +26,31 @@ def create_app():
         return redirect ('https://github.com/login/oauth/authorize?client_id=51479667196a085f5024')
 # Add logic to redirect to the GitHub OAuth flow when unauthenticated
     
-    @app.route('/login/callback/<code>', methods=['GET'])
+    @app.route('/callback', methods=['GET'])
     def callback():
         code = request.args.get('code')
         
-        url = 'https://github.com/login/oauth/access_token'
+        access_token_url = 'https://github.com/login/oauth/access_token'
 
         payload = {
-            "client_id": os.getenv('CLIENT_ID'),
-            "client_secret": os.getenv('CLIENT_SECRET'),
+            "client_id": os.getenv('GITHUB_CLIENT_ID'),
+            "client_secret": os.getenv('GITHUB_CLIENT_SECRET'),
             "code": code,
-            "redirect_url": 'http//localhost:5000'
-        }
+            }
 
         headers = {
             "Accept": "application/json"
         }
 
-        requests.request("POST", url, data = payload, headers = headers)
-    
-    @app.route('/login/oauth/<access_token>', methods=['GET'])
-    def response():
-        access_token = request.args.get('access_token')
+        response = requests.post(access_token_url, data = payload, headers = headers)
 
-        Accept: application/json
-        {
-        "access_token": access_token,
-        "scope":"repo,gist",
-        "token_type":"bearer"
+        access_token = response.json()['access_token']
+
+        user_info_url = 'https://api.github.com/user'
+
+        auth_header = {
+            "Authorisation": f"Bearer {access_token}"
         }
-
-        response = requests.request("POST", params=Accept)
-
-        Accept= response.json()
 
     
     @login_manager.user_loader
