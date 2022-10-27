@@ -63,7 +63,7 @@ def create_app():
         user_info_url = 'https://api.github.com/user'
 
         auth_header = {
-            "Authorisation": f"Bearer {access_token}"
+            "Authorization": f"Bearer {access_token}"
         }
 
         user_info_response = requests.get(user_info_url, headers= auth_header)
