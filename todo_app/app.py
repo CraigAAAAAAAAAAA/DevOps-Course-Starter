@@ -26,17 +26,30 @@ def create_app():
     def unauthenticated():
         redirect_url= f"https://github.com/login/oauth/authorize?client_id={os.getenv('GITHUB_CLIENT_ID')}"
         return redirect(redirect_url)
-# Add logic to redirect to the GitHub OAuth flow when unauthenticated
+   
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User(user_id)
     
-    @app.route('/callback', methods=['GET'])
+    login_manager.init_app(app)
+    
+    @app.route('/')
+    @login_required
+    def index():
+
+        item_view_model = ViewModel(items())
+        return render_template('index.html',
+        view_model=item_view_model)
+    
+    @app.route('/callback')
     def callback():
-        code = request.args.get('code')
+        auth_code = request.args.get('code')
         access_token_url = 'https://github.com/login/oauth/access_token'
 
         payload = {
             "client_id": os.getenv('GITHUB_CLIENT_ID'),
             "client_secret": os.getenv('GITHUB_CLIENT_SECRET'),
-            "code": code,
+            "code": auth_code,
             }
 
         headers = {
@@ -55,6 +68,8 @@ def create_app():
 
         user_info_response = requests.get(user_info_url, headers= auth_header)
 
+        pass
+
         user_id = user_info_response.json()['id']
 
         user = User(user_id)
@@ -62,22 +77,6 @@ def create_app():
         login_user(user)
 
         return redirect('/')
-
-    
-    @login_manager.user_loader
-    def load_user(user_id):
-        return User(user_id)
- 
-    login_manager.init_app(app)
-    
-    @app.route('/')
-    @login_required
-
-    def index():
-
-        item_view_model = ViewModel(items())
-        return render_template('index.html',
-        view_model=item_view_model)
 
     @app.route('/add_task', methods=['POST'])
     @login_required
