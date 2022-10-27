@@ -7,12 +7,16 @@ from todo_app.view_model import ViewModel
 from todo_app.todomongo import add_todo_item, items, update_status, delete_item
 import requests
 import os
-from flask_login import LoginManager, UserMixin
-from flask_login import login_required, login_user
+from flask_login import LoginManager, UserMixin, login_required, login_user
 
 class User (UserMixin):
     def __init__(self, id):
         self.id = id
+        self.is_reader = True
+        if self.id == 97612224:
+            self.roles=['reader', 'writer']
+        else:
+            self.roles=['reader']
 
 def create_app():
     
@@ -67,8 +71,6 @@ def create_app():
         }
 
         user_info_response = requests.get(user_info_url, headers= auth_header)
-
-        pass
 
         user_id = user_info_response.json()['id']
 
