@@ -52,7 +52,7 @@ def create_app():
     def index():
 
         item_view_model = ViewModel(items())
-        return render_template('index.html', view_model=item_view_model)
+        return render_template('index.html', view_model=item_view_model, user=current_user)
     
     @app.route('/callback')
     def callback():

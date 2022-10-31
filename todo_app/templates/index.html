@@ -13,6 +13,7 @@
       <input type="text" name="todo_title" id="todo_title" required>
     </div>
     <div class="form-example">
+      {% if 'writer' in user.roles %}
       <input type="submit" value="Submit">
     </div>
   </form>
@@ -21,6 +22,7 @@
     <div class="col-md-12">
       <h2>Items</h2>
       <ul class="list-group mb-4">
+        {% if 'writer' in user.roles %}
         {% for item in view_model.items %} 
                 <li>{{ item.name }} - {{item.status}}
                   {% if item.status != "In progress"%}
