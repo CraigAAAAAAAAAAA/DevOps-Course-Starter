@@ -1,19 +1,17 @@
-from http import client
-from pickletools import long1
+import functools
 from flask import Flask, render_template, request, redirect
-from todo_app.todo import Item
 from todo_app.flask_config import Config
 from todo_app.view_model import ViewModel
 from todo_app.todomongo import add_todo_item, items, update_status, delete_item
 import requests
 import os
-from flask_login import LoginManager, UserMixin, login_required, login_user
+from flask_login import LoginManager, UserMixin, login_required, login_user, current_user
 
 class User (UserMixin):
     def __init__(self, id):
         self.id = id
         self.is_reader = True
-        if self.id == 97612224:
+        if id == '97612224':
             self.roles=['reader', 'writer']
         else:
             self.roles=['reader']
@@ -34,16 +32,27 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User(user_id)
+
     
     login_manager.init_app(app)
+
+    def writer_required(func):
+        @functools.wraps(func)
+        def forbidden_if_not_writer_func(*args, **kwargs):
+            if "writer" not in current_user.roles:
+                return "Forbidden", 403
+            else:
+                return func(*args, **kwargs)
+
+        return forbidden_if_not_writer_func
+
     
     @app.route('/')
     @login_required
     def index():
 
         item_view_model = ViewModel(items())
-        return render_template('index.html',
-        view_model=item_view_model)
+        return render_template('index.html', view_model=item_view_model)
     
     @app.route('/callback')
     def callback():
@@ -74,7 +83,7 @@ def create_app():
 
         user_id = user_info_response.json()['id']
 
-        user = User(user_id)
+        user = User(str(user_id))
 
         login_user(user)
 
@@ -82,8 +91,8 @@ def create_app():
 
     @app.route('/add_task', methods=['POST'])
     @login_required
+    @writer_required
     def add_new_item():
-
         title = request.form['todo_title']
         add_todo_item(title)
         
@@ -91,8 +100,8 @@ def create_app():
 
     @app.route('/progress', methods=['POST'])
     @login_required
+    @writer_required
     def in_progress():
-
         item_id = request.form['item_id']
         update_status(item_id, 'in progress')
   
@@ -100,8 +109,8 @@ def create_app():
         
     @app.route('/mark_done', methods=['POST'])
     @login_required
+    @writer_required
     def mark_done():
-
         item_id = request.form['item_id']
         delete_item(item_id)
         
