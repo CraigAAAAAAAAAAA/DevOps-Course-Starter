@@ -4,7 +4,7 @@
 {% block content %}
   <div class="jumbotron">
     <h1 class="display-4">Craig's To-Do App</h1>
-    <p class="lead">What needs doing today?.</p>
+    <p class="lead">What needs doing?</p>
   </div>
 
   <form action="add_task" method="post" class="form-example">
@@ -26,7 +26,8 @@
                   {% if item.status != "In progress"%}
                   <form action="progress" method="post" class="form-example">
                     <input type="hidden" value="{{item.id}}" name="item_id">
-                    <input type="submit" value="Started">
+                    <input type="checkbox" id="itemstarted" name="itemstarted" value="Started">
+                    <label for="itemstarted"> Started</label><br><br>
                   </form>
                   {% endif %}
                   {% if item.status != "Done"%}
