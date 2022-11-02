@@ -5,7 +5,7 @@ from todo_app.view_model import ViewModel
 from todo_app.todomongo import add_todo_item, items, update_status, delete_item
 import requests
 import os
-from flask_login import LoginManager, UserMixin, login_required, login_user, current_user, AnonymousUserMixin
+from flask_login import LoginManager, UserMixin, login_required, login_user, current_user
 
 class User (UserMixin):
     def __init__(self, id):
@@ -39,7 +39,7 @@ def create_app():
     def writer_required(func):
         @functools.wraps(func)
         def forbidden_if_not_writer_func(*args, **kwargs):
-            if os.getenv('LOGIN_DISABLED') or current_user.role == 'writer':
+            if os.getenv('LOGIN_DISABLED') or 'writer' in current_user.roles:
                 return func(*args, **kwargs)
             else:
                 return "Forbidden", 403

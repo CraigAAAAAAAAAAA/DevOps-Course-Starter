@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
-{% block title %}To-Do App{% endblock %}
+{% block title %}Craigs To-Do App{% endblock %}
 
 {% block content %}
-  <div class="jumbotron">
-    <h1 class="display-4">Craig's To-Do App</h1>
-    <p class="lead">What needs doing?</p>
+  <div style="background-color:rgb(45, 68, 91);" class="jumbotron">
+    <h1 style="color:Tomato;" class="display-4">Tasks to Complete</h1>
+    <p style="color:Tomato;" class="lead">A non exhaustive list!</p>
   </div>
 
   <form action="add_task" method="post" class="form-example">
     <div class="form-example">
-      <label for="name"> Add item: </label>
+      <label style="color:rgb(71, 132, 255);" for="name"> Add a task: </label>
       <input type="text" name="todo_title" id="todo_title" required>
     </div>
     <div class="form-example">
@@ -20,21 +20,21 @@
   <div class="row">
     <div class="col-md-12">
       <h2>Items</h2>
+      <h2 style="color:Tomato;">List of unenviable things to do</h2>
       <ul class="list-group mb-4">
         {% for item in view_model.items %} 
                 <li>{{ item.name }} - {{item.status}}
-                  {% if item.status != "In progress"%}
-                  <form action="progress" method="post" class="form-example">
+                  {% if item.status != "in progress"%}
+                  <span style="float: right; margin-right: 300px; margin-top: 5px;"><form action="progress" method="post" class="form-example">
                     <input type="hidden" value="{{item.id}}" name="item_id">
-                    <input type="checkbox" id="itemstarted" name="itemstarted" value="Started">
-                    <label for="itemstarted"> Started</label><br><br>
-                  </form>
+                    <input type="submit" style="color:tomato;" value="Start Task">
+                  </form></span>
                   {% endif %}
                   {% if item.status != "Done"%}
-                  <form action="mark_done" method="post" class="form-example">
+                  <span style="float: right; margin-right: 50px; margin-top: 5px;"><form action="mark_done" method="post" class="form-example">
                     <input type="hidden" value="{{item.id}}" name="item_id">
-                    <input type="submit" value="Delete">
-                  </form>
+                    <input type="submit" style="color:tomato;" value="Complete Task">
+                  </form></span>
                   {% endif %}
                 </li> 
         {% endfor %}

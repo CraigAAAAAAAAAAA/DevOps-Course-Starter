@@ -67,4 +67,4 @@ def driver():
 def test_task_journey(driver, app_with_temp_db):
     driver.get('http://localhost:5000/')
 
-    assert driver.title == 'To-Do App'
+    assert driver.title == 'Craigs To-Do App'
