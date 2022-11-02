@@ -1,6 +1,13 @@
+from flask_login import current_user
+import os
+
 class ViewModel:
     def __init__(self, items):
         self._items = items
+
+    @property
+    def is_writer(self):
+        return os.getenv('LOGIN_DISABLED') or 'writer' in current_user.roles
     
     @property
     def items(self):

@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Craigs To-Do App{% endblock %}
+{% block title %}To-Do App{% endblock %}
 
 {% block content %}
   <div style="background-color:rgb(45, 68, 91);" class="jumbotron">
@@ -7,6 +7,8 @@
     <p style="color:Tomato;" class="lead">A non exhaustive list!</p>
   </div>
 
+  
+  {% if view_model.is_writer %}
   <form action="add_task" method="post" class="form-example">
     <div class="form-example">
       <label style="color:rgb(71, 132, 255);" for="name"> Add a task: </label>
@@ -16,6 +18,7 @@
       <input type="submit" value="Submit">
     </div>
   </form>
+  {% endif %} 
 
   <div class="row">
     <div class="col-md-12">
@@ -25,6 +28,7 @@
         {% for item in view_model.items %} 
                 <li>{{ item.name }} - {{item.status}}
                   {% if item.status != "in progress"%}
+                  {% if view_model.is_writer %}
                   <span style="float: right; margin-right: 300px; margin-top: 5px;"><form action="progress" method="post" class="form-example">
                     <input type="hidden" value="{{item.id}}" name="item_id">
                     <input type="submit" style="color:tomato;" value="Start Task">
@@ -35,6 +39,7 @@
                     <input type="hidden" value="{{item.id}}" name="item_id">
                     <input type="submit" style="color:tomato;" value="Complete Task">
                   </form></span>
+                  {% endif %}
                   {% endif %}
                 </li> 
         {% endfor %}
