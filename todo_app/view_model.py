@@ -1,6 +1,13 @@
+from flask_login import current_user
+import os
+
 class ViewModel:
     def __init__(self, items):
         self._items = items
+
+    @property
+    def is_writer(self):
+        return os.getenv('LOGIN_DISABLED') == 'True' or 'writer' in current_user.roles
     
     @property
     def items(self):
@@ -18,7 +25,7 @@ class ViewModel:
     def in_progress(self):
         items_in_progress = []
         for mark_in_progress in self.items:
-            if mark_in_progress.status == "In Progress":
+            if mark_in_progress.status == "Started":
                 items_in_progress.append(mark_in_progress)        
         return items_in_progress
 

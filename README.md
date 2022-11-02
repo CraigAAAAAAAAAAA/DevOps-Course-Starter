@@ -186,3 +186,7 @@ The code has been updated to use MongoDB to hold tasks added to the app, change 
 
 Testing has been updated to reflect the move away from Trello and now tests that the DB works as expected and that the app can still be set up and taken down. 
 
+## OAuth
+Authorisation is now required via Github to access the To-Do app. New code added to redirect users to Github to log in, authenticated users will be able to view the To-Do app but only users with 'Writing' access will be able to add tasks and modify existing tasks. 
+The login function has been disabled on tests to allow these to run. 
+
