@@ -39,7 +39,7 @@ def create_app():
     def writer_required(func):
         @functools.wraps(func)
         def forbidden_if_not_writer_func(*args, **kwargs):
-            if os.getenv('LOGIN_DISABLED') or 'writer' in current_user.roles:
+            if os.getenv('LOGIN_DISABLED') == 'True' or 'writer' in current_user.roles:
                 return func(*args, **kwargs)
             else:
                 return "Forbidden", 403
