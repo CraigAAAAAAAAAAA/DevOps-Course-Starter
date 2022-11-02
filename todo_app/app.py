@@ -103,7 +103,7 @@ def create_app():
     @writer_required
     def in_progress():
         item_id = request.form['item_id']
-        update_status(item_id, 'in progress')
+        update_status(item_id, 'started')
   
         return redirect ('/')
         
