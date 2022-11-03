@@ -11,32 +11,30 @@
   {% if view_model.is_writer %}
   <form action="add_task" method="post" class="form-example">
     <div class="form-example">
-      <label style="color:rgb(71, 132, 255);" for="name"> Add a task: </label>
+      <label style="color:rgb(23, 50, 79);" for="name"> Add a task: </label>
       <input type="text" name="todo_title" id="todo_title" required>
-    </div>
-    <div class="form-example">
-      <input style="color:tomato; font-size:small; font-weight: bold; background: slategray;" type="submit" value="Submit">
+      <input style="margin-inline-end: 23em; color:tomato; font-size:small; font-weight: bold; background:rgb(23, 50, 79);" type="submit" value="Submit">
     </div>
   </form>
   {% endif %} 
 
   <div class="row">
     <div class="col-md-12">
-      <h2 style="color: Tomato; font-size: large; font-weight: bolder;">List of unenviable things to do</h2>
+      <h2 style="color: Tomato; font-size: large; font-weight: bolder;  padding: 10px 15px 20px">List of unenviable things to do</h2>
       <ul class="list-group mb-4">
         {% for item in view_model.items %} 
-        <li style="display: flex; font-size:110%; font-family: 'Courier New', Courier, monospace; color: tomato; font-weight: bolder;">{{ item.name }} - {{item.status}}
+        <li style="float:left; font-family: 'Courier New', Courier, monospace; color: tomato; font-weight: bolder;">{{ item.name }} - {{item.status}}
                   {% if view_model.is_writer %}
+                  {% if item.status != "Done"%}
+                  <span style="padding: 0.2em; float:right"><form action="mark_done" method="post" class="form-example">
+                    <input type="hidden" value="{{item.id}}" name="item_id">
+                    <input type="submit" style="display: flex; color:tomato; font-size:small; font-weight: bold; background: rgb(23, 50, 79);" value="Complete Task">
+                  </form></span>
+                  {% endif %}
                   {% if item.status != "started"%}
-                    <span style="display:inline-table; margin-left: 10%; padding: 0.5em;"><form action="progress" method="post" class="form-example">
+                    <span style="margin-left: 2px; padding: 0.2em; float: right"><form action="progress" method="post" class="form-example">
                       <input type="hidden" value="{{item.id}}" name="item_id">
-                      <input type="submit" style="display: flex; color:tomato; font-size: small; font-weight:bold; background: slategray;" value="Start Task">
-                    </form></span>
-                    {% endif %}
-                    {% if item.status != "Done"%}
-                    <span style="margin-left: 15px; padding: 0.5em;"><form action="mark_done" method="post" class="form-example">
-                      <input type="hidden" value="{{item.id}}" name="item_id">
-                      <input type="submit" style="display: flex; color:tomato; font-size:small; font-weight: bold; background: slategray;" value="Complete Task">
+                      <input type="submit" style="display: flex; color:tomato; font-size: small; font-weight:bold; background: rgb(23, 50, 79);" value="Start Task">
                     </form></span>
                     {% endif %}
                   {% endif %}
