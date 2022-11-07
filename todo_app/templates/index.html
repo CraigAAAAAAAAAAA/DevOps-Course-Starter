@@ -13,7 +13,7 @@
     <div class="form-example">
       <label style="color:rgb(23, 50, 79);" for="name"> Add a task: </label>
       <input type="text" class="capitalized" name="todo_title" id="todo_title" required>
-      <input style="margin-inline-end: 23em; color:tomato; font-size:small; font-weight: bold; background:rgb(23, 50, 79);" type="submit" value="Submit">
+      <input style="margin-inline-end: 23em; color:tomato; font-size:small; font-weight: bold; background:rgb(23, 50, 79); border-radius: 10px;" type="submit" value="Submit">
     </div>
   </form>
   {% endif %} 
@@ -26,15 +26,15 @@
         <li style="float:left; font-family: 'Courier New', Courier, monospace; color: tomato; font-weight: bolder; text-transform: capitalize;">{{ item.name }} - {{item.status}}
                   {% if view_model.is_writer %}
                   {% if item.status != "Done"%}
-                  <span style="padding: 0.2em; float:right"><form action="mark_done" method="post" class="form-example">
+                  <span style="padding: 0.4em; float:right"><form action="mark_done" method="post" class="form-example">
                     <input type="hidden" value="{{item.id}}" name="item_id">
-                    <input type="submit" style="display: flex; color:tomato; font-size:small; font-weight: bold; background: rgb(23, 50, 79);" value="Complete Task">
+                    <input type="submit" style="display: flex; color:tomato; font-size:small; font-weight: bold; background: rgb(23, 50, 79); border-radius: 12px;" value="Complete Task">
                   </form></span>
                   {% endif %}
                   {% if item.status != "started"%}
-                    <span style="margin-left: 2px; padding: 0.2em; float: right"><form action="progress" method="post" class="form-example">
+                    <span style="margin-left: 2px; padding: 0.4em; float: right"><form action="progress" method="post" class="form-example">
                       <input type="hidden" value="{{item.id}}" name="item_id">
-                      <input type="submit" style="display: flex; color:tomato; font-size: small; font-weight:bold; background: rgb(23, 50, 79);" value="Start Task">
+                      <input type="submit" style="display: flex; color:tomato; font-size: small; font-weight:bold; background: rgb(23, 50, 79); border-radius: 12px;" value="Start Task">
                     </form></span>
                     {% endif %}
                   {% endif %}
