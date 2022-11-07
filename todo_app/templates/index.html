@@ -12,18 +12,18 @@
   <form action="add_task" method="post" class="form-example">
     <div class="form-example">
       <label style="color:rgb(23, 50, 79);" for="name"> Add a task: </label>
-      <input type="text" name="todo_title" id="todo_title" required>
+      <input type="text" class="capitalized" name="todo_title" id="todo_title" required>
       <input style="margin-inline-end: 23em; color:tomato; font-size:small; font-weight: bold; background:rgb(23, 50, 79);" type="submit" value="Submit">
     </div>
   </form>
   {% endif %} 
 
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-8">
       <h2 style="color: Tomato; font-size: large; font-weight: bolder;  padding: 10px 15px 20px">List of unenviable things to do</h2>
       <ul class="list-group mb-4">
         {% for item in view_model.items %} 
-        <li style="float:left; font-family: 'Courier New', Courier, monospace; color: tomato; font-weight: bolder;">{{ item.name }} - {{item.status}}
+        <li style="float:left; font-family: 'Courier New', Courier, monospace; color: tomato; font-weight: bolder; text-transform: capitalize;">{{ item.name }} - {{item.status}}
                   {% if view_model.is_writer %}
                   {% if item.status != "Done"%}
                   <span style="padding: 0.2em; float:right"><form action="mark_done" method="post" class="form-example">
