@@ -153,7 +153,7 @@ Run unit tests:
 docker run --env-file .env.test todo_app:test todo_app/tests/test_unit.py
 
 Run E2E tests:
-docker run -e TRELLO_API_KEY=${{secrets.TRELLO_API_KEY}} -e TRELLO_API_TOKEN=${{secrets.TRELLO_API_TOKEN}} -e SECRET_KEY=anything todo_app:test todo_app/tests/test_e2e.py
+docker run -e MONGO_CONNECTION_STRING='${{secrets.MONGO_CONNECTION_STRING}}' -e MONGO_DATABASE_NAME='${{secrets.MONGO_DATABASE_NAME}}' -e SECRET_KEY=anything todo_app:test todo_app/tests/test_e2e.py
 
 To run tests whenever a change is made utilising Watchdog's watchmedo feature run the following in the command line:
 
