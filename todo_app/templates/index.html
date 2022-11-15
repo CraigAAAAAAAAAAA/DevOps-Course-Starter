@@ -19,20 +19,20 @@
   {% endif %} 
 
   <div class="row">
-    <div class="col-md-8">
-      <h2 style="color: Tomato; font-size: large; font-weight: bolder;  padding: 10px 15px 20px">List of unenviable things to do</h2>
-      <ul class="list-group mb-4">
+    <div class="col-md-12">
+      <h2 style="color: Tomato; font-size: large; font-weight: bolder; position: relative; left:9cm; padding: 10px 15px 20px">List of unenviable things to do</h2>
+      <ul class="list-group mb-4" style="background-image: url('https://static-ppimages.freetls.fastly.net/product/2000000216195-2.jpg?canvas=600,600&fit=bounds&height=600&mode=max&width=600&404=default.jpg'); background-repeat: no-repeat; background-size: 100%; list-style-type: none">
         {% for item in view_model.items %} 
-        <li style="float:left; font-family: 'Courier New', Courier, monospace; color: tomato; font-weight: bolder; text-transform: capitalize;">{{ item.name }} - {{item.status}}
+        <li style="padding-left: 2cm; font-family: 'Courier New', Courier, monospace; color: tomato; font-weight: bolder; text-transform: capitalize; text-align:start">{{ item.name }} - {{item.status}}
                   {% if view_model.is_writer %}
                   {% if item.status != "Done"%}
                   <span style="padding: 0.4em; float:right"><form action="mark_done" method="post" class="form-example">
-                    <input type="hidden" value="{{item.id}}" name="item_id">
+                  <input type="hidden" value="{{item.id}}" name="item_id">
                     <input type="submit" style="display: flex; color:tomato; font-size:small; font-weight: bold; background: rgb(23, 50, 79); border-radius: 12px;" value="Complete Task">
                   </form></span>
                   {% endif %}
                   {% if item.status != "started"%}
-                    <span style="margin-left: 2px; padding: 0.4em; float: right"><form action="progress" method="post" class="form-example">
+                    <span style="padding: 0.4em; float:right"><form action="progress" method="post" class="form-example">
                       <input type="hidden" value="{{item.id}}" name="item_id">
                       <input type="submit" style="display: flex; color:tomato; font-size: small; font-weight:bold; background: rgb(23, 50, 79); border-radius: 12px;" value="Start Task">
                     </form></span>
