@@ -21,7 +21,7 @@
   <div class="row">
     <div class="col-md-12">
       <h2 style="color: Tomato; font-size: large; font-weight: bolder; position: relative; left:9cm; padding: 10px 15px 20px">List of unenviable things to do</h2>
-      <ul class="list-group mb-4" style="background-image: url('https://static-ppimages.freetls.fastly.net/product/2000000216195-2.jpg?canvas=600,600&fit=bounds&height=600&mode=max&width=600&404=default.jpg'); background-repeat: no-repeat; background-size: 100%; list-style-type: none">
+      <ul class="list-group mb-4" style="background-image: url('https://static-ppimages.freetls.fastly.net/product/2000000216195-2.jpg?canvas=600,600&fit=bounds&height=600&mode=max&width=600&404=default.jpg'); background-repeat:repeat-y; background-size: 100%; list-style-type: none">
         {% for item in view_model.items %} 
         <li style="padding-left: 2cm; font-family: 'Courier New', Courier, monospace; color: tomato; font-weight: bolder; text-transform: capitalize; text-align:start">{{ item.name }} - {{item.status}}
                   {% if view_model.is_writer %}
