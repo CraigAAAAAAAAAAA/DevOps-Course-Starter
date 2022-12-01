@@ -69,10 +69,10 @@ jobs:
     - name: push docker image
       run: docker push craigbeasley/todo_app:prod
 
-    - name: initialise terraform
-      run: terraform initialise
+    - name: set up terraform
+      run: terraform init
     
-    - name: apply terraform set up
+    - name: terraform apply
       run: terraform apply -auto-approve
 
     - name: update Azure 
