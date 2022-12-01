@@ -77,6 +77,6 @@ jobs:
       run: terraform apply -auto-approve
 
     - name: update Azure 
-      run: curl -dH --fail -X POST "$(terraform output -raw cd_webhook)"
+      run: curl -dH --fail -X POST "$(terraform output -raw webhook)"
     
 
