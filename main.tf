@@ -81,7 +81,7 @@ resource "azurerm_cosmosdb_account" "main" {
   }
 
   lifecycle {
-    prevent_destroy = "false"
+    prevent_destroy = "true"
   }
 
   mongo_server_version = "3.6"

@@ -190,3 +190,6 @@ Testing has been updated to reflect the move away from Trello and now tests that
 Authorisation is now required via Github to access the To-Do app. New code added to redirect users to Github to log in, authenticated users will be able to view the To-Do app but only users with 'Writing' access will be able to add tasks and modify existing tasks. 
 The login function has been disabled on tests to allow these to run. 
 
+## Terraform
+The app's architecture is now configured using terraform. It provisions the mongo database and utilities blob storage. The CI/CD pipeline has been updated to include terraform with no sensitive variables appearing in the logs. 
+
