@@ -123,3 +123,10 @@ geckodriver.exe
 geckodriver.log
 
 .dccache
+
+### Terraform config files
+.terraform
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfvars
+terraform.tfstate.backup
