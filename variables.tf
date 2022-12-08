@@ -7,7 +7,7 @@ variable "SECRET_KEY" {
 variable "MONGO_DATABASE_NAME" {
   description = "Name of the database"
   type        = string
-  sensitive   = "true"
+  sensitive   = "false"
 }
 
 variable "GITHUB_CLIENT_ID" {

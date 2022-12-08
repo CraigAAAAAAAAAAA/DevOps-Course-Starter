@@ -193,3 +193,13 @@ The login function has been disabled on tests to allow these to run.
 ## Terraform
 The app's architecture is now configured using terraform. It provisions the mongo database and utilities blob storage. The CI/CD pipeline has been updated to include terraform with no sensitive variables appearing in the logs. 
 
+Secrets should be added to the terraform.tfvars file, be sure to add this file to .gitignore file.  A description of the variables and secrets should added to the variables.tf file, setting to 'true' any sensitive variables.
+
+To set up terraform locally once the files are configured type in the following commands in the CLI:
+- terraform init 
+- terraform plan - this will allow you to see what terraform is setting up
+- terraform apply - this is to apply the changes you want to make
+
+Prevent Destory is currently set to true in the main.tf file, to remove the current resources and start again this will either need to be set to false or commented out.
+
+
