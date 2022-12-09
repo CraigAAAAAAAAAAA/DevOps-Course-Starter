@@ -34,7 +34,7 @@ tomli = "*"
 
 [[package]]
 name = "certifi"
-version = "2022.9.24"
+version = "2022.12.7"
 description = "Python package for providing Mozilla's CA Bundle."
 category = "main"
 optional = false
@@ -533,7 +533,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "flake8 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "98ae81101eda655c60159a37b16797dab47b2b6f7168411ad96b6d63b25ca861"
+content-hash = "3b4942b172424a7ba5363fd09e37017a9b5a5fa71f5bd526fb510449b1a368a4"
 
 [metadata.files]
 async-generator = []
