@@ -38,7 +38,11 @@ def create_app():
     @login_manager.unauthorized_handler
     def unauthenticated():
         redirect_url= f"https://github.com/login/oauth/authorize?client_id={os.getenv('GITHUB_CLIENT_ID')}"
+
+        app.logger.info("New user attempted to use the app")
+
         return redirect(redirect_url)
+    
    
     @login_manager.user_loader
     def load_user(user_id):
@@ -54,6 +58,7 @@ def create_app():
             if os.getenv('LOGIN_DISABLED') == 'True' or 'writer' in current_user.roles:
                 return func(*args, **kwargs)
             else:
+                app.logger.warning("Unauthorised user")
                 return "Forbidden", 403
 
         return forbidden_if_not_writer_func
@@ -99,25 +104,37 @@ def create_app():
 
         login_user(user)
 
+        app.logger.info("User Logged in: %s", user_id)
+
         return redirect('/')
 
     @app.route('/add_task', methods=['POST'])
     @login_required
     @writer_required
     def add_new_item():
-        title = request.form['todo_title']
-        add_todo_item(title)
+        try:
+            title = request.form['todo_title']
+            add_todo_item(title)
 
-        app.logger.info("Value of new item is: %s", title)
-        
+            app.logger.info("New task added: %s", title)
+
+        except add_new_item as e:
+            app.logger.error("New task error: %s", title, exc_info=True)
+               
         return redirect ('/')
 
     @app.route('/progress', methods=['POST'])
     @login_required
     @writer_required
     def in_progress():
-        item_id = request.form['item_id']
-        update_status(item_id, 'started')
+        try:
+            item_id = request.form['item_id']
+            update_status(item_id, 'started')
+            
+            app.logger.info("Task Started: %s", item_id)
+        
+        except in_progress as e:
+            app.logger.error("Task status did not update: %s", item_id, exc_info=True)
   
         return redirect ('/')
         
@@ -125,8 +142,14 @@ def create_app():
     @login_required
     @writer_required
     def mark_done():
-        item_id = request.form['item_id']
-        delete_item(item_id)
+        try:
+            item_id = request.form['item_id']
+            delete_item(item_id)
+            
+            app.logger.info("Task Finished: %s", item_id)
+        
+        except mark_done as e:
+            app.logger.error("Task was not completed: %s", item_id, exc_info=True)
         
         return index ()
 
