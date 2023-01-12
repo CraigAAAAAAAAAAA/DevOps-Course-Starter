@@ -6,6 +6,8 @@ from todo_app.todomongo import add_todo_item, items, update_status, delete_item
 import requests
 import os
 from flask_login import LoginManager, UserMixin, login_required, login_user, current_user
+from loggly.handlers import HTTPSHandler
+from logging import Formatter
 
 class User (UserMixin):
     def __init__(self, id):
@@ -21,6 +23,15 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config())
     app.config['LOGIN_DISABLED'] = os.getenv('LOGIN_DISABLED') == 'True'
+    app.logger.setLevel(os.getenv('LOG_LEVEL'))
+    
+    if app.config['LOGGLY_TOKEN'] is not None:
+        handler = HTTPSHandler(
+            f'https://logs-01.loggly.com/inputs/{app.config["LOGGLY_TOKEN"]}/tag/todo-app')
+    handler.setFormatter(
+        Formatter("[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
+    )
+    app.logger.addHandler(handler)
 
     login_manager = LoginManager()
     
@@ -35,6 +46,7 @@ def create_app():
 
     
     login_manager.init_app(app)
+
 
     def writer_required(func):
         @functools.wraps(func)
@@ -95,6 +107,8 @@ def create_app():
     def add_new_item():
         title = request.form['todo_title']
         add_todo_item(title)
+
+        app.logger.info("Value of new item is: %s", title)
         
         return redirect ('/')
 
