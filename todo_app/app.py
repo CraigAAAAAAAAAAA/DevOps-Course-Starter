@@ -58,7 +58,7 @@ def create_app():
             if os.getenv('LOGIN_DISABLED') == 'True' or 'writer' in current_user.roles:
                 return func(*args, **kwargs)
             else:
-                app.logger.warning("Unauthorised user, 403")
+                app.logger.warning(f"Unauthorised user, 403, ID {current_user.id}")
                 return "Forbidden", 403
 
         return forbidden_if_not_writer_func
