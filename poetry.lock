@@ -221,6 +221,17 @@ MarkupSafe = ">=2.0"
 i18n = ["Babel (>=2.7)"]
 
 [[package]]
+name = "loggly-python-handler"
+version = "1.0.1"
+description = "Python logging handler that sends messages to Loggly"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+requests-futures = ">=1.0.0"
+
+[[package]]
 name = "markupsafe"
 version = "2.1.1"
 description = "Safely add untrusted strings to HTML/XML markup."
@@ -382,6 +393,17 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use_chardet_on_py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
+name = "requests-futures"
+version = "1.0.0"
+description = "Asynchronous Python HTTP for Humans."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+requests = ">=1.2.0"
+
+[[package]]
 name = "selenium"
 version = "4.6.0"
 description = ""
@@ -533,7 +555,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "flake8 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "3b4942b172424a7ba5363fd09e37017a9b5a5fa71f5bd526fb510449b1a368a4"
+content-hash = "b343355d831df9523ca70591cae389cabca38b0c14c1a848ac602c24a71eac9a"
 
 [metadata.files]
 async-generator = []
@@ -561,6 +583,7 @@ iniconfig = [
 ]
 itsdangerous = []
 jinja2 = []
+loggly-python-handler = []
 markupsafe = []
 mongomock = []
 outcome = []
@@ -583,6 +606,7 @@ python-dotenv = [
     {file = "python_dotenv-0.14.0-py2.py3-none-any.whl", hash = "sha256:c10863aee750ad720f4f43436565e4c1698798d763b63234fb5021b6c616e423"},
 ]
 requests = []
+requests-futures = []
 selenium = []
 sentinels = []
 sniffio = []

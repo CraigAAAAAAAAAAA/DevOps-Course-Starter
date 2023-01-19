@@ -118,6 +118,7 @@ env/
 
 ### Configuration files ###
 .env
+python.conf
 
 geckodriver.exe
 geckodriver.log

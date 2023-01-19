@@ -200,6 +200,13 @@ To set up terraform locally once the files are configured type in the following 
 - terraform plan - this will allow you to see what terraform is setting up
 - terraform apply - this is to apply the changes you want to make
 
-Prevent Destory is currently set to true in the main.tf file, to remove the current resources and start again this will either need to be set to false or commented out.
+Prevent Destroy is currently set to true in the main.tf file, to remove the current resources and start again this will either need to be set to false or commented out.
+
+## Logging
+Logging has been set up to store logs at info level and above. Logs are stored at loggly.com and stores the following:
+- Item ID when the user clicks on start and complete 
+- The logs the tile of the task, this could potential store private information but for the purposes of this exercise   deemed it was ok. 
+- Error logs set up to record if tasks do not behave as expected e.g. does not change status to started when the corresponding button is clicked.
+-Warning logs set to record the user ID when an authorised user logs into the app, when a new user visits the app or when a user with no write access tries to edit the tasks
 
 
