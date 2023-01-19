@@ -200,7 +200,7 @@ To set up terraform locally once the files are configured type in the following 
 - terraform plan - this will allow you to see what terraform is setting up
 - terraform apply - this is to apply the changes you want to make
 
-Prevent Destory is currently set to true in the main.tf file, to remove the current resources and start again this will either need to be set to false or commented out.
+Prevent Destroy is currently set to true in the main.tf file, to remove the current resources and start again this will either need to be set to false or commented out.
 
 ## Logging
 Logging has been set up to store logs at info level and above. Logs are stored at loggly.com and stores the following:

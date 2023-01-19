@@ -118,7 +118,7 @@ def create_app():
 
             app.logger.info("New task added: %s", title)
 
-        except add_new_item as e:
+        except Exception as add_item:
             app.logger.error("New task error: %s", title, exc_info=True)
                
         return redirect ('/')
@@ -133,7 +133,7 @@ def create_app():
             
             app.logger.info("Task Started: %s", item_id)
         
-        except in_progress as e:
+        except Exception as started:
             app.logger.error("Task status did not update: %s", item_id, exc_info=True)
   
         return redirect ('/')
@@ -148,7 +148,7 @@ def create_app():
             
             app.logger.info("Task Finished: %s", item_id)
         
-        except mark_done as e:
+        except Exception as mark_done:
             app.logger.error("Task was not completed: %s", item_id, exc_info=True)
         
         return index ()
