@@ -28,5 +28,10 @@ variable "ACCOUNT_KEY" {
   sensitive   = "true"
 }
 
+variable "LOGGLY_TOKEN" {
+  description = "Loggly token"
+  type        = string
+  sensitive   = "true"
+}
 
 

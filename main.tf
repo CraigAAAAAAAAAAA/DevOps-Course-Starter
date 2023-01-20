@@ -56,6 +56,7 @@ resource "azurerm_app_service" "main" {
     "GITHUB_CLIENT_SECRET"       = var.GITHUB_CLIENT_SECRET
     "GITHUB_CLIENT_ID"           = var.GITHUB_CLIENT_ID
     "MONGO_DATABASE_NAME"        = var.MONGO_DATABASE_NAME
+    "LOGGLY_TOKEN"               = var.LOGGLY_TOKEN
   }
 }
 

@@ -50,6 +50,7 @@ jobs:
       TF_VAR_SECRET_KEY: '${{ secrets.SECRET_KEY }}'
       TF_VAR_MONGO_DATABASE_NAME: '${{ secrets.MONGO_DATABASE_NAME }}'
       TF_VAR_ACCOUNT_KEY: '${{ secrets.ACCOUNT_KEY }}'
+      TF_VAR_LOGGLY_TOKEN: '${{ secrets.LOGGLY_TOKEN }}'
       ARM_CLIENT_ID: '${{ secrets.ARM_CLIENT_ID }}'
       ARM_CLIENT_SECRET: '${{ secrets.ARM_CLIENT_SECRET }}'
       ARM_TENANT_ID: '${{ secrets.ARM_TENANT_ID }}'
