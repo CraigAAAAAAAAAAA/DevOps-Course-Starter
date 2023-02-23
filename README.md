@@ -209,4 +209,50 @@ Logging has been set up to store logs at info level and above. Logs are stored a
 - Error logs set up to record if tasks do not behave as expected e.g. does not change status to started when the corresponding button is clicked.
 -Warning logs set to record the user ID when an authorised user logs into the app, when a new user visits the app or when a user with no write access tries to edit the tasks
 
+## Minikube
+The todo app runs locally using minikube. To run the app via Minikube run the following commands:
+
+- minikube start
+This will start the minikube cluster
+
+- kubectl port-forward service/todo-app 5000:8000
+This will run the app, to view it navigate to localhost:5000 
+
+As this is running locally, its using the secrets outlined in the .env file.
+To see what secrets have been set run:
+- kubectl get secrets
+Should display something like this:
+NAME               TYPE     DATA   AGE
+github-client      Opaque   1      7d22h
+loggly             Opaque   1      7d22h
+mongo-connection   Opaque   1      7d22h
+secret-key         Opaque   1      7d22h
+todo-secrets       Opaque   1      7d22h
+
+To edit an existing secret run:
+- kubectl edit secrets <//name of secret>
+This will bring up text file, get the value of the secret which will be in Base64, you'll need to decode it, change it and then code it back again before saving it. 
+
+To add a new secret run:
+kubectl create secret generic todo-secrets(change this) --from-literal=GITHUB_CLIENT_SECRET(change this)='the-actual-secret'
+
+For more information on secrets visit https://kubernetes.io/docs/concepts/configuration/secret/
+
+If you need to make changes to the deployment or service filees, don't forget to update them using:
+- kubectl apply -f deployment.yaml
+- kubectl apply -f service.yaml
+
+To check your pod is running use:
+- kubectl get pods
+This will show something like this
+NAME                        READY   STATUS    RESTARTS       AGE
+module-14-d4d677548-9p72l   1/1     Running   4 (3h5m ago)   11d
+todo-app-5574c8bbcc-n8f42   1/1     Running   0              42s
+
+For trouble shooting use the following commands along with the name of the pod you're having trouble with:
+- kubectl logs my-pod - used for showing logs after a pod has crashed
+- kubectl describe pod my-pod - used for showing errors when a pod has failed to start
+
+
+
 
